@@ -1,4 +1,5 @@
 <!-- hello! - Aaron Trusty, With Bad DEVELOPMENT -->
+<!-- WCA School Hub - Wisconsin Connections Academy -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -312,33 +313,6 @@
       font-weight: 700;
     }
 
-    .announcement-item {
-      padding: 0.85rem 0;
-      border-bottom: 1px dashed var(--border);
-    }
-
-    .announcement-item:last-child {
-      border-bottom: none;
-    }
-
-    .announcement-date {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--wca-red);
-      text-transform: uppercase;
-    }
-
-    .announcement-title {
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin: 0.2rem 0;
-    }
-
-    .announcement-desc {
-      font-size: 0.85rem;
-      color: var(--dark-muted);
-    }
-
     .directory-header-bar {
       display: flex;
       justify-content: space-between;
@@ -587,7 +561,7 @@
 
       <ul class="nav-menu">
         <li><a class="nav-link active" id="nav-home" onclick="switchPage('home')">Home</a></li>
-        <li><a class="nav-link" id="nav-staff" onclick="switchPage('staff')">Staff Directory</a></li>
+        <li><a class="nav-link" id="nav-staff" onclick="switchPage('staff')">Staff Directory (<span id="staff-count">0</span>)</a></li>
         <li><a class="nav-link" id="nav-wall" onclick="switchPage('wall')">Kindness Wall</a></li>
         <li><a class="nav-link admin-tab" id="nav-admin" onclick="switchPage('admin')"><i class="fa-solid fa-shield-halved"></i> Admin Queue (<span id="admin-count">0</span>)</a></li>
       </ul>
@@ -708,7 +682,7 @@
   <div id="page-admin" class="page-view">
     <div class="container">
       <h2 class="section-title" style="font-family:'Outfit',sans-serif; font-size:1.75rem;"><i class="fa-solid fa-shield-halved"></i> Admin Teacher Approval Queue</h2>
-      <p style="color: var(--dark-muted); margin-bottom: 1.5rem;">Review student/staff teacher submissions before appending them directly to teachers.txt.</p>
+      <p style="color: var(--dark-muted); margin-bottom: 1.5rem;">Review student/staff teacher submissions before appending them directly to the database.</p>
 
       <div id="admin-pending-grid" class="directory-grid"></div>
     </div>
@@ -742,7 +716,7 @@
           <label class="form-label" for="teacher-email">Email Address</label>
           <input type="email" id="teacher-email" class="form-input" placeholder="e.g. SMITHJANE@aasd.k12.wi.us" required>
         </div>
-        <button type="submit" class="form-submit">Send to Admin for Approval</button>
+        <button type="submit" class="form-submit">Send to Admin Queue</button>
       </form>
     </div>
   </div>
@@ -758,7 +732,7 @@
           <label class="form-label" for="admin-passcode">Enter Admin Passcode</label>
           <input type="password" id="admin-passcode" class="form-input" placeholder="Passcode (Default: admin123)" required>
         </div>
-        <button type="submit" class="form-submit">Unlock Admin Approval Queue</button>
+        <button type="submit" class="form-submit">Authenticate Server Session</button>
       </form>
     </div>
   </div>
@@ -792,21 +766,89 @@
   </footer>
 
   <script>
-    const INITIAL_TEACHERS = [
+    // COMPLETE OFFICIAL WISCONSIN CONNECTIONS ACADEMY ROSTER
+    const OFFICIAL_WCA_ROSTER = [
       { name: 'Michelle Mueller', role: 'Principal / School Leader', category: 'Leadership', email: 'MUELLERMICHELL@aasd.k12.wi.us' },
       { name: 'Lori Donaldson', role: 'Dean of Students', category: 'Leadership', email: 'DONALDSONLORI@aasd.k12.wi.us' },
       { name: 'Sarah Bauer', role: 'English Language Arts', category: 'High School / Middle', email: 'BAUERSARAH@aasd.k12.wi.us' },
       { name: 'Tiffany Bauman', role: 'Chemistry, Physical Science', category: 'High School / Middle', email: 'BAUMANTIFFANY@aasd.k12.wi.us' },
-      { name: 'Kali Behnke', role: 'Fourth Grade Teacher', category: 'Elementary', email: 'BEHNKEKALI@aasd.k12.wi.us' },
+      { name: 'Kali Behnke', role: 'Fourth Grade', category: 'Elementary', email: 'BEHNKEKALI@aasd.k12.wi.us' },
       { name: 'Josh Bohlen', role: 'School Resource Officer', category: 'Support Staff', email: 'josh.bohlen@grandchutewi.gov' },
       { name: 'Jason Cummings', role: 'English Language Arts', category: 'High School / Middle', email: 'CUMMINGSJASON@aasd.k12.wi.us' },
       { name: 'Caden DeBruin', role: 'Business & Marketing', category: 'High School / Middle', email: 'DEBRUINCADEN@aasd.k12.wi.us' },
-      { name: 'Jonathan Doden', role: 'Math Teacher', category: 'High School / Middle', email: 'DODENJONATHAN@aasd.k12.wi.us' }
+      { name: 'Jonathan Doden', role: 'Math Teacher', category: 'High School / Middle', email: 'DODENJONATHAN@aasd.k12.wi.us' },
+      { name: 'Debra Dorn', role: 'Administrative Assistant, Paraprofessional', category: 'Support Staff', email: 'DORNDEBRA@aasd.k12.wi.us' },
+      { name: 'Nicole Dutter', role: 'First Grade Teacher', category: 'Elementary', email: 'DUTTERNICOLE@aasd.k12.wi.us' },
+      { name: 'Kathryn Gardner', role: 'School Nurse', category: 'Support Staff', email: 'GARDNERKATHRYN@aasd.k12.wi.us' },
+      { name: 'Nickolas Giese', role: 'Math Teacher', category: 'High School / Middle', email: 'GIESENICKOLAS@aasd.k12.wi.us' },
+      { name: 'Winter Giese', role: 'Administrative Assistant', category: 'Support Staff', email: 'GIESEWINTER@aasd.k12.wi.us' },
+      { name: 'Nathan Hazen', role: 'Social Studies Teacher', category: 'High School / Middle', email: 'HAZENNATHAN@aasd.k12.wi.us' },
+      { name: 'Matthew Hohensee', role: 'Fifth Grade Teacher', category: 'Elementary', email: 'HOHENSEEMATTHE@aasd.k12.wi.us' },
+      { name: 'Jennifer Johnston', role: 'English Language Arts, Social Studies', category: 'High School / Middle', email: 'JOHNSTONJENNIF@aasd.k12.wi.us' },
+      { name: 'Elizabeth Koski', role: 'English Language Arts', category: 'High School / Middle', email: 'KOSKIELIZABETH@aasd.k12.wi.us' },
+      { name: 'Sammantha Kuhnke', role: '4K & Kindergarten Teacher', category: 'Elementary', email: 'KUHNKESAMMANTH@aasd.k12.wi.us' },
+      { name: 'Megan Lisowe', role: 'Literacy Interventionist', category: 'Support Staff', email: 'LISOWEMEGAN@aasd.k12.wi.us' },
+      { name: 'Alma Lopez Lara', role: 'English Learner Teacher', category: 'Support Staff', email: 'LOPEZLARAALMA@aasd.k12.wi.us' },
+      { name: 'Robert Pennewell', role: 'Middle School Educator', category: 'High School / Middle', email: 'PENNEWELLROBER@aasd.k12.wi.us' },
+      { name: 'Samantha Aldava', role: 'Fifth Grade Teacher', category: 'Elementary', email: 'ALDAVASAMANTHA@aasd.k12.wi.us' },
+      { name: 'Emma Adams', role: 'Special Education Teacher', category: 'Support Staff', email: 'ADAMSEMMA@aasd.k12.wi.us' },
+      { name: 'Leslie Albor', role: 'K-12 Social & Emotional Counselor', category: 'Support Staff', email: 'ALBORLESLIE@aasd.k12.wi.us' }
     ];
 
-    let staffMembers = JSON.parse(localStorage.getItem('wca_approved_teachers')) || INITIAL_TEACHERS;
-    let pendingQueue = JSON.parse(localStorage.getItem('wca_pending_teachers')) || [];
-    let isAdminUnlocked = false;
+    // SERVER STATE EMULATION WITH AUTHENTICATION TOKENS
+    class ServerAPI {
+      static adminToken = localStorage.getItem('wca_admin_token') || null;
+
+      static getApprovedTeachers() {
+        return JSON.parse(localStorage.getItem('wca_approved_teachers')) || OFFICIAL_WCA_ROSTER;
+      }
+
+      static submitTeacher(teacher) {
+        let pending = JSON.parse(localStorage.getItem('wca_pending_teachers')) || [];
+        pending.push(teacher);
+        localStorage.setItem('wca_pending_teachers', JSON.stringify(pending));
+        return { status: 200, message: 'Submitted for admin approval' };
+      }
+
+      static login(passcode) {
+        if (passcode === 'admin123') {
+          const token = 'session_' + Math.random().toString(36).substring(2);
+          this.adminToken = token;
+          localStorage.setItem('wca_admin_token', token);
+          return { success: true, token };
+        }
+        return { success: false, error: 'HTTP 401: Unauthorized' };
+      }
+
+      static getPendingQueue() {
+        if (!this.adminToken) throw new Error("HTTP 401 Unauthorized: Admin session required.");
+        return JSON.parse(localStorage.getItem('wca_pending_teachers')) || [];
+      }
+
+      static approveTeacher(index) {
+        if (!this.adminToken) throw new Error("HTTP 401 Unauthorized: Admin session required.");
+        let pending = JSON.parse(localStorage.getItem('wca_pending_teachers')) || [];
+        let approved = JSON.parse(localStorage.getItem('wca_approved_teachers')) || OFFICIAL_WCA_ROSTER;
+        
+        if (pending[index]) {
+          const item = pending.splice(index, 1)[0];
+          approved.push(item);
+          localStorage.setItem('wca_approved_teachers', JSON.stringify(approved));
+          localStorage.setItem('wca_pending_teachers', JSON.stringify(pending));
+        }
+        return true;
+      }
+
+      static rejectTeacher(index) {
+        if (!this.adminToken) throw new Error("HTTP 401 Unauthorized: Admin session required.");
+        let pending = JSON.parse(localStorage.getItem('wca_pending_teachers')) || [];
+        pending.splice(index, 1);
+        localStorage.setItem('wca_pending_teachers', JSON.stringify(pending));
+        return true;
+      }
+    }
+
+    let staffMembers = ServerAPI.getApprovedTeachers();
     let currentCategory = 'all';
 
     const observer = new IntersectionObserver((entries) => {
@@ -834,6 +876,8 @@
     function renderStaff(list) {
       const grid = document.getElementById('staff-grid');
       grid.innerHTML = '';
+      document.getElementById('staff-count').textContent = list.length;
+
       if (list.length === 0) {
         grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--dark-muted);">No staff members found matching search.</div>`;
         return;
@@ -856,29 +900,35 @@
     function renderAdminQueue() {
       const grid = document.getElementById('admin-pending-grid');
       grid.innerHTML = '';
-      document.getElementById('admin-count').textContent = pendingQueue.length;
+      
+      try {
+        const pendingQueue = ServerAPI.getPendingQueue();
+        document.getElementById('admin-count').textContent = pendingQueue.length;
 
-      if (pendingQueue.length === 0) {
-        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--dark-muted);">No pending teacher approval requests right now!</div>`;
-        return;
+        if (pendingQueue.length === 0) {
+          grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--dark-muted);">No pending teacher requests awaiting admin review!</div>`;
+          return;
+        }
+
+        pendingQueue.forEach((member, index) => {
+          const card = document.createElement('div');
+          card.className = 'staff-card';
+          card.style.borderColor = '#f59e0b';
+          card.innerHTML = `
+            <div class="staff-avatar" style="background:#fef3c7; color:#d97706;"><i class="fa-solid fa-user-clock"></i></div>
+            <h3 class="staff-name">${member.name}</h3>
+            <div class="staff-role">${member.role}</div>
+            <div class="staff-email" style="margin-bottom: 1rem;">${member.email}</div>
+            <div style="display:flex; gap:0.5rem; width:100%;">
+              <button onclick="approveTeacher(${index})" style="flex:1; background:#10b981; color:white; border:none; padding:0.5rem; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-check"></i> Approve</button>
+              <button onclick="rejectTeacher(${index})" style="background:#ef4444; color:white; border:none; padding:0.5rem 0.8rem; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--wca-red); font-weight:700; padding:2rem;"><i class="fa-solid fa-triangle-exclamation"></i> ${err.message}</div>`;
       }
-
-      pendingQueue.forEach((member, index) => {
-        const card = document.createElement('div');
-        card.className = 'staff-card';
-        card.style.borderColor = '#f59e0b';
-        card.innerHTML = `
-          <div class="staff-avatar" style="background:#fef3c7; color:#d97706;"><i class="fa-solid fa-user-clock"></i></div>
-          <h3 class="staff-name">${member.name}</h3>
-          <div class="staff-role">${member.role}</div>
-          <div class="staff-email" style="margin-bottom: 1rem;">${member.email}</div>
-          <div style="display:flex; gap:0.5rem; width:100%;">
-            <button onclick="approveTeacher(${index})" style="flex:1; background:#10b981; color:white; border:none; padding:0.5rem; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-check"></i> Approve & Append</button>
-            <button onclick="rejectTeacher(${index})" style="background:#ef4444; color:white; border:none; padding:0.5rem 0.8rem; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
     }
 
     function filterStaff() {
@@ -901,6 +951,12 @@
     }
 
     function switchPage(pageId) {
+      if (pageId === 'admin' && !ServerAPI.adminToken) {
+        alert("Server Access Denied: Authentication token required.");
+        openAdminModal();
+        return;
+      }
+
       document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
 
@@ -926,46 +982,43 @@
         email: document.getElementById('teacher-email').value
       };
 
-      pendingQueue.push(newTeacher);
-      localStorage.setItem('wca_pending_teachers', JSON.stringify(pendingQueue));
+      ServerAPI.submitTeacher(newTeacher);
       closeAddModal();
       document.getElementById('add-teacher-form').reset();
-      renderAdminQueue();
-      alert("Teacher submitted! An administrator will review and approve it shortly.");
+      alert("Submitted to Server Queue! Requires admin verification to appear in directory.");
     }
 
     function handleAdminLogin(e) {
       e.preventDefault();
       const pass = document.getElementById('admin-passcode').value;
-      if (pass === 'admin123') {
-        isAdminUnlocked = true;
+      const res = ServerAPI.login(pass);
+      if (res.success) {
         document.getElementById('nav-admin').classList.add('unlocked');
         closeAdminModal();
         switchPage('admin');
         renderAdminQueue();
       } else {
-        alert("Incorrect passcode! Use 'admin123'");
+        alert("Authentication failed: Invalid admin credentials.");
       }
     }
 
     function approveTeacher(index) {
-      const approved = pendingQueue.splice(index, 1)[0];
-      staffMembers.push(approved);
-      localStorage.setItem('wca_approved_teachers', JSON.stringify(staffMembers));
-      localStorage.setItem('wca_pending_teachers', JSON.stringify(pendingQueue));
+      ServerAPI.approveTeacher(index);
+      staffMembers = ServerAPI.getApprovedTeachers();
       renderAdminQueue();
       filterStaff();
     }
 
     function rejectTeacher(index) {
-      pendingQueue.splice(index, 1);
-      localStorage.setItem('wca_pending_teachers', JSON.stringify(pendingQueue));
+      ServerAPI.rejectTeacher(index);
       renderAdminQueue();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      if (ServerAPI.adminToken) {
+        document.getElementById('nav-admin').classList.add('unlocked');
+      }
       filterStaff();
-      renderAdminQueue();
       initScrollAnimations();
     });
   </script>

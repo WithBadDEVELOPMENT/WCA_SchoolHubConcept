@@ -140,8 +140,8 @@
     .nav-link.admin-tab {
       display: none;
       background: #fef2f2;
-      color: #dc2626;
-      border: 1px dashed #f87171;
+      color: var(--wca-red);
+      border: 1px dashed var(--wca-red);
     }
 
     .nav-link.admin-tab.unlocked {
@@ -214,7 +214,7 @@
     }
 
     .hero-title span {
-      color: #f87171;
+      color: var(--wca-red);
     }
 
     .hero-mission-caption {
@@ -311,6 +311,34 @@
       font-family: 'Outfit', sans-serif;
       font-size: 1.2rem;
       font-weight: 700;
+    }
+
+    .announcement-item {
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .announcement-item:last-child {
+      border-bottom: none;
+    }
+
+    .announcement-date {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--wca-red);
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .announcement-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .announcement-desc {
+      font-size: 0.875rem;
+      color: var(--dark-muted);
     }
 
     .directory-header-bar {
@@ -534,7 +562,7 @@
 
     .footer-brand h2 { font-family: 'Outfit', sans-serif; font-size: 1.15rem; margin-bottom: 0.5rem; }
     .footer-brand p { color: #94a3b8; font-size: 0.85rem; max-width: 380px; }
-    .footer-column h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.85rem; color: #f87171; }
+    .footer-column h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.85rem; color: var(--wca-red); }
     .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
     .footer-links a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; cursor: pointer; }
     .footer-bottom { max-width: 1280px; margin: 1.25rem auto 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #64748b; }
@@ -681,8 +709,15 @@
 
   <div id="page-admin" class="page-view">
     <div class="container">
-      <h2 class="section-title" style="font-family:'Outfit',sans-serif; font-size:1.75rem;"><i class="fa-solid fa-shield-halved"></i> Admin Teacher Approval Queue</h2>
-      <p style="color: var(--dark-muted); margin-bottom: 1.5rem;">Review student/staff teacher submissions before appending them directly to the database.</p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <div>
+          <h2 class="section-title" style="font-family:'Outfit',sans-serif; font-size:1.75rem;"><i class="fa-solid fa-shield-halved"></i> Admin Teacher Approval Queue</h2>
+          <p style="color: var(--dark-muted);">Review pending teacher submissions currently in the queue.</p>
+        </div>
+        <button onclick="handleAdminLogout()" style="background:#ef4444; color:white; border:none; padding:0.6rem 1rem; border-radius:8px; font-weight:700; cursor:pointer;">
+          <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+        </button>
+      </div>
 
       <div id="admin-pending-grid" class="directory-grid"></div>
     </div>
@@ -730,9 +765,9 @@
       <form onsubmit="handleAdminLogin(event)">
         <div class="form-group">
           <label class="form-label" for="admin-passcode">Enter Admin Passcode</label>
-          <input type="password" id="admin-passcode" class="form-input" placeholder="Passcode (Default: admin123)" required>
+          <input type="password" id="admin-passcode" class="form-input" placeholder="Passcode" required>
         </div>
-        <button type="submit" class="form-submit">Authenticate Server Session</button>
+        <button type="submit" class="form-submit">Authenticate Active Session</button>
       </form>
     </div>
   </div>
@@ -749,7 +784,7 @@
           <li><a href="https://www.connexus.com/" target="_blank">Pearson Connexus</a></li>
           <li><a onclick="switchPage('staff')">Staff Directory</a></li>
           <li><a onclick="switchPage('wall')">Kindness Wall</a></li>
-          <li><a onclick="openAdminModal()" style="color: #ef4444;"><i class="fa-solid fa-lock"></i> Admin Login</a></li>
+          <li id="footer-login-item"><a onclick="openAdminModal()" style="color: #ef4444;"><i class="fa-solid fa-lock"></i> Admin Login</a></li>
         </ul>
       </div>
       <div class="footer-column">
@@ -766,96 +801,13 @@
   </footer>
 
   <script>
-    // COMPLETE OFFICIAL WISCONSIN CONNECTIONS ACADEMY ROSTER
-    const OFFICIAL_WCA_ROSTER = [
-      { name: 'Michelle Mueller', role: 'Principal / School Leader', category: 'Leadership', email: 'MUELLERMICHELL@aasd.k12.wi.us' },
-      { name: 'Lori Donaldson', role: 'Dean of Students', category: 'Leadership', email: 'DONALDSONLORI@aasd.k12.wi.us' },
-      { name: 'Sarah Bauer', role: 'English Language Arts', category: 'High School / Middle', email: 'BAUERSARAH@aasd.k12.wi.us' },
-      { name: 'Tiffany Bauman', role: 'Chemistry, Physical Science', category: 'High School / Middle', email: 'BAUMANTIFFANY@aasd.k12.wi.us' },
-      { name: 'Kali Behnke', role: 'Fourth Grade', category: 'Elementary', email: 'BEHNKEKALI@aasd.k12.wi.us' },
-      { name: 'Josh Bohlen', role: 'School Resource Officer', category: 'Support Staff', email: 'josh.bohlen@grandchutewi.gov' },
-      { name: 'Jason Cummings', role: 'English Language Arts', category: 'High School / Middle', email: 'CUMMINGSJASON@aasd.k12.wi.us' },
-      { name: 'Caden DeBruin', role: 'Business & Marketing', category: 'High School / Middle', email: 'DEBRUINCADEN@aasd.k12.wi.us' },
-      { name: 'Jonathan Doden', role: 'Math Teacher', category: 'High School / Middle', email: 'DODENJONATHAN@aasd.k12.wi.us' },
-      { name: 'Debra Dorn', role: 'Administrative Assistant, Paraprofessional', category: 'Support Staff', email: 'DORNDEBRA@aasd.k12.wi.us' },
-      { name: 'Nicole Dutter', role: 'First Grade Teacher', category: 'Elementary', email: 'DUTTERNICOLE@aasd.k12.wi.us' },
-      { name: 'Kathryn Gardner', role: 'School Nurse', category: 'Support Staff', email: 'GARDNERKATHRYN@aasd.k12.wi.us' },
-      { name: 'Nickolas Giese', role: 'Math Teacher', category: 'High School / Middle', email: 'GIESENICKOLAS@aasd.k12.wi.us' },
-      { name: 'Winter Giese', role: 'Administrative Assistant', category: 'Support Staff', email: 'GIESEWINTER@aasd.k12.wi.us' },
-      { name: 'Nathan Hazen', role: 'Social Studies Teacher', category: 'High School / Middle', email: 'HAZENNATHAN@aasd.k12.wi.us' },
-      { name: 'Matthew Hohensee', role: 'Fifth Grade Teacher', category: 'Elementary', email: 'HOHENSEEMATTHE@aasd.k12.wi.us' },
-      { name: 'Jennifer Johnston', role: 'English Language Arts, Social Studies', category: 'High School / Middle', email: 'JOHNSTONJENNIF@aasd.k12.wi.us' },
-      { name: 'Elizabeth Koski', role: 'English Language Arts', category: 'High School / Middle', email: 'KOSKIELIZABETH@aasd.k12.wi.us' },
-      { name: 'Sammantha Kuhnke', role: '4K & Kindergarten Teacher', category: 'Elementary', email: 'KUHNKESAMMANTH@aasd.k12.wi.us' },
-      { name: 'Megan Lisowe', role: 'Literacy Interventionist', category: 'Support Staff', email: 'LISOWEMEGAN@aasd.k12.wi.us' },
-      { name: 'Alma Lopez Lara', role: 'English Learner Teacher', category: 'Support Staff', email: 'LOPEZLARAALMA@aasd.k12.wi.us' },
-      { name: 'Robert Pennewell', role: 'Middle School Educator', category: 'High School / Middle', email: 'PENNEWELLROBER@aasd.k12.wi.us' },
-      { name: 'Samantha Aldava', role: 'Fifth Grade Teacher', category: 'Elementary', email: 'ALDAVASAMANTHA@aasd.k12.wi.us' },
-      { name: 'Emma Adams', role: 'Special Education Teacher', category: 'Support Staff', email: 'ADAMSEMMA@aasd.k12.wi.us' },
-      { name: 'Leslie Albor', role: 'K-12 Social & Emotional Counselor', category: 'Support Staff', email: 'ALBORLESLIE@aasd.k12.wi.us' }
-    ];
-
-    // SERVER STATE EMULATION WITH AUTHENTICATION TOKENS
-    class ServerAPI {
-      static adminToken = localStorage.getItem('wca_admin_token') || null;
-
-      static getApprovedTeachers() {
-        return JSON.parse(localStorage.getItem('wca_approved_teachers')) || OFFICIAL_WCA_ROSTER;
-      }
-
-      static submitTeacher(teacher) {
-        let pending = JSON.parse(localStorage.getItem('wca_pending_teachers')) || [];
-        pending.push(teacher);
-        localStorage.setItem('wca_pending_teachers', JSON.stringify(pending));
-        return { status: 200, message: 'Submitted for admin approval' };
-      }
-
-      static login(passcode) {
-        if (passcode === 'admin123') {
-          const token = 'session_' + Math.random().toString(36).substring(2);
-          this.adminToken = token;
-          localStorage.setItem('wca_admin_token', token);
-          return { success: true, token };
-        }
-        return { success: false, error: 'HTTP 401: Unauthorized' };
-      }
-
-      static getPendingQueue() {
-        if (!this.adminToken) throw new Error("HTTP 401 Unauthorized: Admin session required.");
-        return JSON.parse(localStorage.getItem('wca_pending_teachers')) || [];
-      }
-
-      static approveTeacher(index) {
-        if (!this.adminToken) throw new Error("HTTP 401 Unauthorized: Admin session required.");
-        let pending = JSON.parse(localStorage.getItem('wca_pending_teachers')) || [];
-        let approved = JSON.parse(localStorage.getItem('wca_approved_teachers')) || OFFICIAL_WCA_ROSTER;
-        
-        if (pending[index]) {
-          const item = pending.splice(index, 1)[0];
-          approved.push(item);
-          localStorage.setItem('wca_approved_teachers', JSON.stringify(approved));
-          localStorage.setItem('wca_pending_teachers', JSON.stringify(pending));
-        }
-        return true;
-      }
-
-      static rejectTeacher(index) {
-        if (!this.adminToken) throw new Error("HTTP 401 Unauthorized: Admin session required.");
-        let pending = JSON.parse(localStorage.getItem('wca_pending_teachers')) || [];
-        pending.splice(index, 1);
-        localStorage.setItem('wca_pending_teachers', JSON.stringify(pending));
-        return true;
-      }
-    }
-
-    let staffMembers = ServerAPI.getApprovedTeachers();
+    let staffMembers = [];
     let currentCategory = 'all';
+    let adminToken = sessionStorage.getItem('wca_admin_token') || null;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
       });
     }, { threshold: 0.1 });
 
@@ -864,14 +816,23 @@
     }
 
     function updateClock() {
-      const now = new Date();
       const clockEl = document.getElementById('live-clock');
       if (clockEl) {
-        clockEl.textContent = now.toLocaleTimeString('en-US', { timeZone: 'America/Chicago' });
+        clockEl.textContent = new Date().toLocaleTimeString('en-US', { timeZone: 'America/Chicago' });
       }
     }
     setInterval(updateClock, 1000);
     updateClock();
+
+    async function loadTeachers() {
+      try {
+        const res = await fetch('/api/teachers');
+        staffMembers = await res.json();
+        filterStaff();
+      } catch (err) {
+        console.error("Failed to load teachers from server:", err);
+      }
+    }
 
     function renderStaff(list) {
       const grid = document.getElementById('staff-grid');
@@ -897,20 +858,36 @@
       });
     }
 
-    function renderAdminQueue() {
+    async function renderAdminQueue() {
       const grid = document.getElementById('admin-pending-grid');
       grid.innerHTML = '';
-      
+
+      if (!adminToken) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--wca-red); padding: 2rem; font-weight:700;"><i class="fa-solid fa-lock"></i> HTTP 401 Unauthorized: You are not currently logged in as an active admin.</div>`;
+        return;
+      }
+
       try {
-        const pendingQueue = ServerAPI.getPendingQueue();
+        const res = await fetch('/api/admin/pending', {
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+
+        if (res.status === 401) {
+          handleAdminLogout();
+          throw new Error("Session expired or invalid.");
+        }
+
+        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+
+        const pendingQueue = await res.json();
         document.getElementById('admin-count').textContent = pendingQueue.length;
 
         if (pendingQueue.length === 0) {
-          grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--dark-muted);">No pending teacher requests awaiting admin review!</div>`;
+          grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--dark-muted);">No pending teacher requests awaiting review!</div>`;
           return;
         }
 
-        pendingQueue.forEach((member, index) => {
+        pendingQueue.forEach((member) => {
           const card = document.createElement('div');
           card.className = 'staff-card';
           card.style.borderColor = '#f59e0b';
@@ -920,14 +897,14 @@
             <div class="staff-role">${member.role}</div>
             <div class="staff-email" style="margin-bottom: 1rem;">${member.email}</div>
             <div style="display:flex; gap:0.5rem; width:100%;">
-              <button onclick="approveTeacher(${index})" style="flex:1; background:#10b981; color:white; border:none; padding:0.5rem; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-check"></i> Approve</button>
-              <button onclick="rejectTeacher(${index})" style="background:#ef4444; color:white; border:none; padding:0.5rem 0.8rem; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+              <button onclick="approveTeacher(${member.id})" style="flex:1; background:#10b981; color:white; border:none; padding:0.5rem; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-check"></i> Approve</button>
+              <button onclick="rejectTeacher(${member.id})" style="background:#ef4444; color:white; border:none; padding:0.5rem 0.8rem; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
             </div>
           `;
           grid.appendChild(card);
         });
       } catch (err) {
-        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--wca-red); font-weight:700; padding:2rem;"><i class="fa-solid fa-triangle-exclamation"></i> ${err.message}</div>`;
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--wca-red); font-weight:700; padding:2rem;"><i class="fa-solid fa-triangle-exclamation"></i> Access Restricted: ${err.message}</div>`;
       }
     }
 
@@ -951,8 +928,8 @@
     }
 
     function switchPage(pageId) {
-      if (pageId === 'admin' && !ServerAPI.adminToken) {
-        alert("Server Access Denied: Authentication token required.");
+      if (pageId === 'admin' && !adminToken) {
+        alert("Server Security Notice: Active admin session required to open Admin Queue.");
         openAdminModal();
         return;
       }
@@ -964,6 +941,8 @@
       const activeNav = document.getElementById('nav-' + pageId);
       if (activeNav) activeNav.classList.add('active');
 
+      if (pageId === 'admin') renderAdminQueue();
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
       initScrollAnimations();
     }
@@ -973,52 +952,93 @@
     function openAdminModal() { document.getElementById('admin-login-modal').classList.add('active'); }
     function closeAdminModal() { document.getElementById('admin-login-modal').classList.remove('active'); }
 
-    function handleAddTeacher(e) {
+    async function handleAddTeacher(e) {
       e.preventDefault();
-      const newTeacher = {
+      const payload = {
         name: document.getElementById('teacher-name').value,
         role: document.getElementById('teacher-role').value,
         category: document.getElementById('teacher-category').value,
         email: document.getElementById('teacher-email').value
       };
 
-      ServerAPI.submitTeacher(newTeacher);
-      closeAddModal();
-      document.getElementById('add-teacher-form').reset();
-      alert("Submitted to Server Queue! Requires admin verification to appear in directory.");
+      const res = await fetch('/api/teachers/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        closeAddModal();
+        document.getElementById('add-teacher-form').reset();
+        alert("Submitted! Request sent to server queue.");
+      }
     }
 
-    function handleAdminLogin(e) {
+    async function handleAdminLogin(e) {
       e.preventDefault();
-      const pass = document.getElementById('admin-passcode').value;
-      const res = ServerAPI.login(pass);
-      if (res.success) {
+      const passcode = document.getElementById('admin-passcode').value;
+
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passcode })
+      });
+
+      const data = await res.json();
+      if (res.ok && data.token) {
+        adminToken = data.token;
+        sessionStorage.setItem('wca_admin_token', adminToken);
         document.getElementById('nav-admin').classList.add('unlocked');
         closeAdminModal();
         switchPage('admin');
-        renderAdminQueue();
       } else {
-        alert("Authentication failed: Invalid admin credentials.");
+        alert("Access Denied: " + (data.error || "Invalid passcode"));
       }
     }
 
-    function approveTeacher(index) {
-      ServerAPI.approveTeacher(index);
-      staffMembers = ServerAPI.getApprovedTeachers();
-      renderAdminQueue();
-      filterStaff();
+    async function handleAdminLogout() {
+      if (adminToken) {
+        await fetch('/api/admin/logout', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+      }
+      adminToken = null;
+      sessionStorage.removeItem('wca_admin_token');
+      document.getElementById('nav-admin').classList.remove('unlocked');
+      switchPage('home');
     }
 
-    function rejectTeacher(index) {
-      ServerAPI.rejectTeacher(index);
-      renderAdminQueue();
+    async function approveTeacher(id) {
+      const res = await fetch(`/api/admin/approve/${id}`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${adminToken}` }
+      });
+
+      if (res.ok) {
+        await loadTeachers();
+        await renderAdminQueue();
+      } else {
+        alert("Server rejected request (Unauthorized or expired session)");
+      }
+    }
+
+    async function rejectTeacher(id) {
+      const res = await fetch(`/api/admin/reject/${id}`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${adminToken}` }
+      });
+
+      if (res.ok) {
+        await renderAdminQueue();
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      if (ServerAPI.adminToken) {
+      if (adminToken) {
         document.getElementById('nav-admin').classList.add('unlocked');
       }
-      filterStaff();
+      loadTeachers();
       initScrollAnimations();
     });
   </script>

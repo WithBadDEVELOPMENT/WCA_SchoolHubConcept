@@ -39,16 +39,13 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/api/teachers", (req, res) => {
+  // Always read directly from file on request
+  teachers = loadTeachersFromFile();
   res.json(teachers);
 });
 
 app.post("/api/teachers/submit", (req, res) => {
-  const { name, role, category, email } = req.body;
-  if (!name || !role) {
-    return res.status(400).json({ error: "Name and role are required." });
-  }
-
-  const newTeacher = { id: Date.now(), name, role, category, email };
+  const newTeacher = { id: Date.now(), ...req.body };
   pendingQueue.push(newTeacher);
   res.json({ message: "Submitted for approval", teacher: newTeacher });
 });
@@ -59,10 +56,10 @@ app.post("/api/admin/login", (req, res) => {
   if (ADMIN_PASSCODE && passcode === ADMIN_PASSCODE) {
     const token = "admin-token-" + Date.now();
     activeSessions.add(token);
-    return res.json({ token });
+    return res.json({ token, success: true });
   }
 
-  res.status(401).json({ error: "Invalid admin passcode" });
+  res.status(401).json({ error: "Invalid admin passcode", success: false });
 });
 
 function auth(req, res, next) {

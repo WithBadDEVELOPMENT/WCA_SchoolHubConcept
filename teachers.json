@@ -23,5 +23,6 @@
   { "id": 22, "name": "Robert Pennewell", "role": "Middle School Teacher", "category": "High School / Middle", "email": "PENNEWELLROBER@aasd.k12.wi.us" },
   { "id": 23, "name": "Samantha Aldava", "role": "Fifth Grade Teacher", "category": "Elementary", "email": "ALDAVASAMANTHA@aasd.k12.wi.us" },
   { "id": 24, "name": "Emma Adams", "role": "Special Education Teacher", "category": "Support Staff", "email": "ADAMSEMMA@aasd.k12.wi.us" },
-  { "id": 25, "name": "Leslie Albor", "role": "K-12 Counselor", "category": "Support Staff", "email": "ALBORLESLIE@aasd.k12.wi.us" }
+  { "id": 25, "name": "Leslie Albor", "role": "K-12 Counselor", "category": "Support Staff", "email": "ALBORLESLIE@aasd.k12.wi.us" },
+  { "id": 26, "name": "Amy Monigal", "role": "Computer Science", "category": "High School / Middle", "email": "AMYMONIGAL@aasd.k12.wi.us" }
 ]

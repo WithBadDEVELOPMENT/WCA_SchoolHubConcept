@@ -801,6 +801,34 @@
   </footer>
 
   <script>
+    const defaultStaff = [
+      { id: 1, name: "Michelle Mueller", role: "Principal / School Leader", category: "Leadership", email: "MUELLERMICHELL@aasd.k12.wi.us" },
+      { id: 2, name: "Lori Donaldson", role: "Dean of Students", category: "Leadership", email: "DONALDSONLORI@aasd.k12.wi.us" },
+      { id: 3, name: "Sarah Bauer", role: "English Language Arts", category: "High School / Middle", email: "BAUERSARAH@aasd.k12.wi.us" },
+      { id: 4, name: "Tiffany Bauman", role: "Chemistry, Physical Science", category: "High School / Middle", email: "BAUMANTIFFANY@aasd.k12.wi.us" },
+      { id: 5, name: "Kali Behnke", role: "Fourth Grade", category: "Elementary", email: "BEHNKEKALI@aasd.k12.wi.us" },
+      { id: 6, name: "Josh Bohlen", role: "School Resource Officer", category: "Support Staff", email: "josh.bohlen@grandchutewi.gov" },
+      { id: 7, name: "Jason Cummings", role: "English Language Arts", category: "High School / Middle", email: "CUMMINGSJASON@aasd.k12.wi.us" },
+      { id: 8, name: "Caden DeBruin", role: "Business & Marketing", category: "High School / Middle", email: "DEBRUINCADEN@aasd.k12.wi.us" },
+      { id: 9, name: "Jonathan Doden", role: "Math Teacher", category: "High School / Middle", email: "DODENJONATHAN@aasd.k12.wi.us" },
+      { id: 10, name: "Debra Dorn", role: "Administrative Assistant", category: "Support Staff", email: "DORNDEBRA@aasd.k12.wi.us" },
+      { id: 11, name: "Nicole Dutter", role: "First Grade Teacher", category: "Elementary", email: "DUTTERNICOLE@aasd.k12.wi.us" },
+      { id: 12, name: "Kathryn Gardner", role: "School Nurse", category: "Support Staff", email: "GARDNERKATHRYN@aasd.k12.wi.us" },
+      { id: 13, name: "Nickolas Giese", role: "Math Teacher", category: "High School / Middle", email: "GIESENICKOLAS@aasd.k12.wi.us" },
+      { id: 14, name: "Winter Giese", role: "Administrative Assistant", category: "Support Staff", email: "GIESEWINTER@aasd.k12.wi.us" },
+      { id: 15, name: "Nathan Hazen", role: "Social Studies Teacher", category: "High School / Middle", email: "HAZENNATHAN@aasd.k12.wi.us" },
+      { id: 16, name: "Matthew Hohensee", role: "Fifth Grade Teacher", category: "Elementary", email: "HOHENSEEMATTHE@aasd.k12.wi.us" },
+      { id: 17, name: "Jennifer Johnston", role: "English Language Arts", category: "High School / Middle", email: "JOHNSTONJENNIF@aasd.k12.wi.us" },
+      { id: 18, name: "Elizabeth Koski", role: "English Language Arts", category: "High School / Middle", email: "KOSKIELIZABETH@aasd.k12.wi.us" },
+      { id: 19, name: "Sammantha Kuhnke", role: "4K & Kindergarten Teacher", category: "Elementary", email: "KUHNKESAMMANTH@aasd.k12.wi.us" },
+      { id: 20, name: "Megan Lisowe", role: "Literacy Interventionist", category: "Support Staff", email: "LISOWEMEGAN@aasd.k12.wi.us" },
+      { id: 21, name: "Alma Lopez Lara", role: "English Learner Teacher", category: "Support Staff", email: "LOPEZLARAALMA@aasd.k12.wi.us" },
+      { id: 22, name: "Robert Pennewell", role: "Middle School Teacher", category: "High School / Middle", email: "PENNEWELLROBER@aasd.k12.wi.us" },
+      { id: 23, name: "Samantha Aldava", role: "Fifth Grade Teacher", category: "Elementary", email: "ALDAVASAMANTHA@aasd.k12.wi.us" },
+      { id: 24, name: "Emma Adams", role: "Special Education Teacher", category: "Support Staff", email: "ADAMSEMMA@aasd.k12.wi.us" },
+      { id: 25, name: "Leslie Albor", role: "K-12 Counselor", category: "Support Staff", email: "ALBORLESLIE@aasd.k12.wi.us" }
+    ];
+
     let staffMembers = [];
     let currentCategory = 'all';
     let adminToken = sessionStorage.getItem('wca_admin_token') || null;
@@ -827,11 +855,12 @@
     async function loadTeachers() {
       try {
         const res = await fetch('/api/teachers');
+        if (!res.ok) throw new Error("Server offline");
         staffMembers = await res.json();
-        filterStaff();
       } catch (err) {
-        console.error("Failed to load teachers from server:", err);
+        staffMembers = [...defaultStaff];
       }
+      filterStaff();
     }
 
     function renderStaff(list) {
@@ -961,16 +990,20 @@
         email: document.getElementById('teacher-email').value
       };
 
-      const res = await fetch('/api/teachers/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+      try {
+        const res = await fetch('/api/teachers/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
 
-      if (res.ok) {
-        closeAddModal();
-        document.getElementById('add-teacher-form').reset();
-        alert("Submitted! Request sent to server queue.");
+        if (res.ok) {
+          closeAddModal();
+          document.getElementById('add-teacher-form').reset();
+          alert("Submitted! Request sent to server queue.");
+        }
+      } catch (err) {
+        alert("Server offline: Unable to submit request.");
       }
     }
 
@@ -978,30 +1011,36 @@
       e.preventDefault();
       const passcode = document.getElementById('admin-passcode').value;
 
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ passcode })
-      });
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ passcode })
+        });
 
-      const data = await res.json();
-      if (res.ok && data.token) {
-        adminToken = data.token;
-        sessionStorage.setItem('wca_admin_token', adminToken);
-        document.getElementById('nav-admin').classList.add('unlocked');
-        closeAdminModal();
-        switchPage('admin');
-      } else {
-        alert("Access Denied: " + (data.error || "Invalid passcode"));
+        const data = await res.json();
+        if (res.ok && data.token) {
+          adminToken = data.token;
+          sessionStorage.setItem('wca_admin_token', adminToken);
+          document.getElementById('nav-admin').classList.add('unlocked');
+          closeAdminModal();
+          switchPage('admin');
+        } else {
+          alert("Access Denied: " + (data.error || "Invalid passcode"));
+        }
+      } catch (err) {
+        alert("Server offline: Cannot authenticate.");
       }
     }
 
     async function handleAdminLogout() {
       if (adminToken) {
-        await fetch('/api/admin/logout', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${adminToken}` }
-        });
+        try {
+          await fetch('/api/admin/logout', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${adminToken}` }
+          });
+        } catch (err) {}
       }
       adminToken = null;
       sessionStorage.removeItem('wca_admin_token');
@@ -1010,27 +1049,35 @@
     }
 
     async function approveTeacher(id) {
-      const res = await fetch(`/api/admin/approve/${id}`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${adminToken}` }
-      });
+      try {
+        const res = await fetch(`/api/admin/approve/${id}`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
 
-      if (res.ok) {
-        await loadTeachers();
-        await renderAdminQueue();
-      } else {
-        alert("Server rejected request (Unauthorized or expired session)");
+        if (res.ok) {
+          await loadTeachers();
+          await renderAdminQueue();
+        } else {
+          alert("Server rejected request (Unauthorized or expired session)");
+        }
+      } catch (err) {
+        alert("Error connecting to server.");
       }
     }
 
     async function rejectTeacher(id) {
-      const res = await fetch(`/api/admin/reject/${id}`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${adminToken}` }
-      });
+      try {
+        const res = await fetch(`/api/admin/reject/${id}`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
 
-      if (res.ok) {
-        await renderAdminQueue();
+        if (res.ok) {
+          await renderAdminQueue();
+        }
+      } catch (err) {
+        alert("Error connecting to server.");
       }
     }
 

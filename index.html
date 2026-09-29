@@ -1,1 +1,912 @@
+<!-- hello! - Aaron Trusty, With Bad DEVELOPMENT -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WCA School Hub | Wisconsin Connections Academy</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+  <style>
+    :root {
+      --primary: #0052cc;
+      --primary-hover: #003e99;
+      --primary-light: #e6f0ff;
+      --secondary: #00a887;
+      --dark: #0f172a;
+      --dark-muted: #475569;
+      --light-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 30px -4px rgba(0,0,0,0.12);
+      --radius: 12px;
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--light-bg);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      will-change: opacity, transform;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .navbar {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--dark);
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--dark);
+    }
+
+    .brand-text span {
+      font-size: 0.75rem;
+      color: var(--dark-muted);
+      font-weight: 500;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      padding: 0.6rem 1rem;
+      color: var(--dark-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.925rem;
+      border-radius: 8px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+      background-color: var(--primary-light);
+    }
+
+    .portal-btn {
+      background: var(--primary);
+      color: white !important;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0, 82, 204, 0.25);
+    }
+
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .page-view {
+      display: none;
+      flex: 1;
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.4rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.75rem;
+      line-height: 1.2;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title span {
+      color: #38bdf8;
+    }
+
+    .hero-desc {
+      color: #94a3b8;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .quick-launch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .launch-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      color: white;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .launch-card:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .launch-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .launch-title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .launch-subtitle {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem;
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .section-subtitle {
+      color: var(--dark-muted);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .resource-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-light);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .icon-blue { background: #e0f2fe; color: #0284c7; }
+    .icon-green { background: #dcfce7; color: #16a34a; }
+    .icon-purple { background: #f3e8ff; color: #9333ea; }
+    .icon-orange { background: #ffedd5; color: #ea580c; }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--dark-muted);
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .card-link:hover {
+      gap: 0.75rem;
+    }
+
+    .search-filter-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--dark-muted);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .filter-btn-group {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .directory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .staff-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .staff-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .staff-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-light), #e2e8f0);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .staff-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .staff-role {
+      font-size: 0.85rem;
+      color: var(--secondary);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .staff-email {
+      font-size: 0.85rem;
+      color: var(--dark-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.8rem;
+      background: var(--light-bg);
+      border-radius: 6px;
+      transition: var(--transition);
+      word-break: break-all;
+    }
+
+    .staff-email:hover {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .news-section {
+      background: white;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .news-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      background: var(--light-bg);
+    }
+
+    .news-date {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-excerpt {
+      font-size: 0.9rem;
+      color: var(--dark-muted);
+    }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      margin-top: auto;
+      padding: 3rem 1.5rem 1.5rem;
+    }
+
+    .footer-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-brand h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-brand p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      max-width: 400px;
+    }
+
+    .footer-column h3 {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+      color: #38bdf8;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 1.5rem auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    @media (max-width: 768px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .quick-launch-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+      .nav-menu {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <a href="#" class="brand" onclick="switchPage('home'); return false;">
+        <div class="brand-logo">WCA</div>
+        <div class="brand-text">
+          <h1>School Hub</h1>
+          <span>Wisconsin Connections Academy</span>
+        </div>
+      </a>
+      
+      <ul class="nav-menu">
+        <li><a class="nav-link active" id="nav-home" onclick="switchPage('home')">Home</a></li>
+        <li><a class="nav-link" id="nav-staff" onclick="switchPage('staff')">Staff Directory</a></li>
+        <li><a class="nav-link" href="https://wca.aasd.k12.wi.us/families" target="_blank">Families</a></li>
+        <li><a class="nav-link" href="https://wca.aasd.k12.wi.us/our-school" target="_blank">About WCA</a></li>
+      </ul>
+
+      <a href="https://www.connexus.com/" target="_blank" class="portal-btn">
+        <i class="fa-solid fa-right-to-bracket"></i> Pearson Online
+      </a>
+    </nav>
+  </header>
+
+  <div id="page-home" class="page-view active">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="reveal">
+          <div class="hero-badge">
+            <i class="fa-solid fa-graduation-cap"></i> Official Student & Family Portal
+          </div>
+          <h2 class="hero-title">Welcome to the <span>WCA Hub</span></h2>
+          <p class="hero-desc">Your central point for accessing online classroom portals, school schedules, staff contacts, and essential educational resources.</p>
+        </div>
+
+        <div class="quick-launch-grid reveal">
+          <a href="https://www.connexus.com/" target="_blank" class="launch-card">
+            <div class="launch-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <div class="launch-title">Pearson Classroom</div>
+            <div class="launch-subtitle">Access daily coursework & lessons</div>
+          </a>
+          <a href="#" onclick="switchPage('staff'); return false;" class="launch-card">
+            <div class="launch-icon"><i class="fa-solid fa-address-book"></i></div>
+            <div class="launch-title">Staff Directory</div>
+            <div class="launch-subtitle">Contact teachers & leadership</div>
+          </a>
+          <a href="https://wca.aasd.k12.wi.us/families" target="_blank" class="launch-card">
+            <div class="launch-icon"><i class="fa-solid fa-users-line"></i></div>
+            <div class="launch-title">Learning Coach</div>
+            <div class="launch-subtitle">Tools for home support</div>
+          </a>
+          <a href="https://wca.aasd.k12.wi.us/contact-us" target="_blank" class="launch-card">
+            <div class="launch-icon"><i class="fa-solid fa-headset"></i></div>
+            <div class="launch-title">Tech & Help Desk</div>
+            <div class="launch-subtitle">Get support & answers</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2 class="section-title reveal">Essential Resources</h2>
+      <p class="section-subtitle reveal">Quick links to core services and tools for Wisconsin Connections Academy students.</p>
+
+      <div class="resources-grid">
+        <div class="resource-card reveal">
+          <div class="card-header">
+            <div class="card-icon icon-blue"><i class="fa-solid fa-book-open"></i></div>
+            <h3 class="card-title">Pearson Connexus</h3>
+          </div>
+          <p class="card-desc">Log into the primary learning management system for assignments, assessments, and grade tracking.</p>
+          <a href="https://www.connexus.com/" target="_blank" class="card-link">Launch Portal <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="resource-card reveal">
+          <div class="card-header">
+            <div class="card-icon icon-green"><i class="fa-solid fa-user-tie"></i></div>
+            <h3 class="card-title">Staff Directory</h3>
+          </div>
+          <p class="card-desc">Browse the full list of WCA teachers, grade-level advisors, counselors, and school administration.</p>
+          <a href="#" onclick="switchPage('staff'); return false;" class="card-link">View Directory <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="resource-card reveal">
+          <div class="card-header">
+            <div class="card-icon icon-purple"><i class="fa-solid fa-calendar-days"></i></div>
+            <h3 class="card-title">Academic Calendar</h3>
+          </div>
+          <p class="card-desc">Stay informed about key school dates, term deadlines, breaks, and district holidays.</p>
+          <a href="https://wca.aasd.k12.wi.us/" target="_blank" class="card-link">View Calendar <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="resource-card reveal">
+          <div class="card-header">
+            <div class="card-icon icon-orange"><i class="fa-solid fa-compass"></i></div>
+            <h3 class="card-title">Enrollment & Info</h3>
+          </div>
+          <p class="card-desc">Learn about enrollment steps, tuition-free charter policies, and curriculum highlights.</p>
+          <a href="https://wca.aasd.k12.wi.us/district" target="_blank" class="card-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="news-section">
+      <div class="container">
+        <h2 class="section-title reveal">School News & Announcements</h2>
+        <p class="section-subtitle reveal">Latest updates from Wisconsin Connections Academy and Appleton Area School District.</p>
+
+        <div class="news-grid">
+          <article class="news-card reveal">
+            <div class="news-date">District Notice</div>
+            <h3 class="news-title">Pearson Online Classroom Navigation</h3>
+            <p class="news-excerpt">Be sure to regularly review your course planner and log student attendance daily inside Pearson Connexus.</p>
+          </article>
+
+          <article class="news-card reveal">
+            <div class="news-date">Learning Coaches</div>
+            <h3 class="news-title">Learning Coach Resources Updated</h3>
+            <p class="news-excerpt">Explore updated guides and tips for supporting your student's online learning environment at home.</p>
+          </article>
+
+          <article class="news-card reveal">
+            <div class="news-date">WCA Community</div>
+            <h3 class="news-title">Virtual Clubs & Activities</h3>
+            <p class="news-excerpt">Connect with fellow WCA students through virtual club meetups and school-wide extracurricular events.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="page-staff" class="page-view">
+    <div class="container">
+      <h2 class="section-title">Staff Directory</h2>
+      <p class="section-subtitle">Connect with certified teachers, support staff, and school leadership at Wisconsin Connections Academy.</p>
+
+      <div class="search-filter-bar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="staff-search" class="search-input" placeholder="Search by name, role, or subject..." onkeyup="filterStaff()">
+        </div>
+        <div class="filter-btn-group">
+          <button class="filter-btn active" onclick="setCategory('all', this)">All Staff</button>
+          <button class="filter-btn" onclick="setCategory('Leadership', this)">Leadership</button>
+          <button class="filter-btn" onclick="setCategory('Elementary', this)">Elementary (4K-5)</button>
+          <button class="filter-btn" onclick="setCategory('High School / Middle', this)">Middle/High School</button>
+          <button class="filter-btn" onclick="setCategory('Support Staff', this)">Support Staff</button>
+        </div>
+      </div>
+
+      <div class="directory-grid" id="staff-grid">
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h2>Wisconsin Connections Academy</h2>
+        <p>A tuition-free virtual public charter school serving students statewide in partnership with the Appleton Area School District.</p>
+      </div>
+
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="https://www.pearsonconnexus.com/" target="_blank">Pearson Connexus</a></li>
+          <li><a href="#" onclick="switchPage('staff'); return false;">Staff Directory</a></li>
+          <li><a href="https://wca.aasd.k12.wi.us/families" target="_blank">Learning Coach Portal</a></li>
+          <li><a href="https://wca.aasd.k12.wi.us/our-school" target="_blank">About Our School</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Contact Info</h3>
+        <ul class="footer-links">
+          <li><a href="tel:18335910251"><i class="fa-solid fa-phone"></i> 1-833-591-0251</a></li>
+          <li><a href="#"><i class="fa-solid fa-location-dot"></i> 350 W Capitol Drive<br>Appleton, WI 54911</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; Wisconsin Connections Academy. Built by Aaron Trusty (With Bad DEVELOPMENT).</p>
+      <p>Appleton Area School District</p>
+    </div>
+  </footer>
+
+  <script>
+    const staffMembers = [
+      { name: "Michelle Mueller", role: "Principal / School Leader", category: "Leadership", email: "MUELLERMICHELL@aasd.k12.wi.us" },
+      { name: "Lori Donaldson", role: "Dean of Students", category: "Leadership", email: "DONALDSONLORI@aasd.k12.wi.us" },
+      { name: "Sarah Bauer", role: "English Language Arts", category: "High School / Middle", email: "BAUERSARAH@aasd.k12.wi.us" },
+      { name: "Tiffany Bauman", role: "Chemistry, Physical Science", category: "High School / Middle", email: "BAUMANTIFFANY@aasd.k12.wi.us" },
+      { name: "Kali Behnke", role: "Fourth Grade Teacher", category: "Elementary", email: "BEHNKEKALI@aasd.k12.wi.us" },
+      { name: "Josh Bohlen", role: "School Resource Officer", category: "Support Staff", email: "josh.bohlen@grandchutewi.gov" },
+      { name: "Jason Cummings", role: "English Language Arts", category: "High School / Middle", email: "CUMMINGSJASON@aasd.k12.wi.us" },
+      { name: "Caden DeBruin", role: "Business & Marketing", category: "High School / Middle", email: "DEBRUINCADEN@aasd.k12.wi.us" },
+      { name: "Jonathan Doden", role: "Math Teacher", category: "High School / Middle", email: "DODENJONATHAN@aasd.k12.wi.us" },
+      { name: "Debra Dorn", role: "Administrative Assistant, Paraprofessional", category: "Support Staff", email: "DORNDEBRA@aasd.k12.wi.us" },
+      { name: "Nicole Dutter", role: "First Grade Teacher", category: "Elementary", email: "DUTTERNICOLE@aasd.k12.wi.us" },
+      { name: "Kathryn Gardner", role: "School Nurse", category: "Support Staff", email: "GARDNERKATHRYN@aasd.k12.wi.us" },
+      { name: "Nickolas Giese", role: "Math Teacher", category: "High School / Middle", email: "GIESENICKOLAS@aasd.k12.wi.us" },
+      { name: "Winter Giese", role: "Administrative Assistant", category: "Support Staff", email: "GIESEWINTER@aasd.k12.wi.us" },
+      { name: "Nathan Hazen", role: "Social Studies Teacher", category: "High School / Middle", email: "HAZENNATHAN@aasd.k12.wi.us" },
+      { name: "Matthew Hohensee", role: "Fifth Grade Teacher", category: "Elementary", email: "HOHENSEEMATTHE@aasd.k12.wi.us" },
+      { name: "Jennifer Johnston", role: "English Language Arts, Social Studies", category: "High School / Middle", email: "JOHNSTONJENNIF@aasd.k12.wi.us" },
+      { name: "Elizabeth Koski", role: "English Language Arts", category: "High School / Middle", email: "KOSKIELIZABETH@aasd.k12.wi.us" },
+      { name: "Sammantha Kuhnke", role: "4K & Kindergarten Teacher", category: "Elementary", email: "KUHNKESAMMANTH@aasd.k12.wi.us" },
+      { name: "Megan Lisowe", role: "Literacy Interventionist", category: "Support Staff", email: "LISOWEMEGAN@aasd.k12.wi.us" },
+      { name: "Alma Lopez Lara", role: "English Learner (EL) Teacher", category: "Support Staff", email: "LOPEZLARAALMA@aasd.k12.wi.us" },
+      { name: "Robert Pennewell", role: "Middle School Teacher", category: "High School / Middle", email: "PENNEWELLROBER@aasd.k12.wi.us" }
+    ];
+
+    let currentCategory = 'all';
+
+    function getInitials(name) {
+      return name.split(' ').map(n => n[0]).join('');
+    }
+
+    function renderStaff(list) {
+      const grid = document.getElementById('staff-grid');
+      grid.innerHTML = '';
+
+      if (list.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--dark-muted);">No staff members found matching your search.</div>`;
+        return;
+      }
+
+      list.forEach(member => {
+        const card = document.createElement('div');
+        card.className = 'staff-card';
+        card.innerHTML = `
+          <div class="staff-avatar">${getInitials(member.name)}</div>
+          <h3 class="staff-name">${member.name}</h3>
+          <div class="staff-role">${member.role}</div>
+          <a href="mailto:${member.email}" class="staff-email">
+            <i class="fa-regular fa-envelope"></i> ${member.email}
+          </a>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterStaff() {
+      const searchVal = document.getElementById('staff-search').value.toLowerCase();
+      const filtered = staffMembers.filter(member => {
+        const matchesSearch = member.name.toLowerCase().includes(searchVal) ||
+                              member.role.toLowerCase().includes(searchVal) ||
+                              member.email.toLowerCase().includes(searchVal);
+        const matchesCat = currentCategory === 'all' || member.category.includes(currentCategory);
+        return matchesSearch && matchesCat;
+      });
+      renderStaff(filtered);
+    }
+
+    function setCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterStaff();
+    }
+
+    function switchPage(pageId) {
+      document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+      document.getElementById('page-' + pageId).classList.add('active');
+      const activeNav = document.getElementById('nav-' + pageId);
+      if (activeNav) activeNav.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderStaff(staffMembers);
+
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>

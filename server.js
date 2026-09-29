@@ -36,9 +36,7 @@ let activeSessions = new Set();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send({ status: "ok", message: "WCA School Hub Backend is running!" });
-});
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/api/teachers", (req, res) => {
   res.json(teachers);
@@ -107,6 +105,10 @@ app.post("/api/admin/logout", auth, (req, res) => {
     activeSessions.delete(token);
   }
   res.json({ message: "Logged out" });
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

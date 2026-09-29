@@ -1,0 +1,30 @@
+{
+  "approved": [
+    { "id": 1, "name": "Michelle Mueller", "role": "Principal / School Leader", "category": "Leadership", "email": "MUELLERMICHELL@aasd.k12.wi.us" },
+    { "id": 2, "name": "Lori Donaldson", "role": "Dean of Students", "category": "Leadership", "email": "DONALDSONLORI@aasd.k12.wi.us" },
+    { "id": 3, "name": "Sarah Bauer", "role": "English Language Arts", "category": "High School / Middle", "email": "BAUERSARAH@aasd.k12.wi.us" },
+    { "id": 4, "name": "Tiffany Bauman", "role": "Chemistry, Physical Science", "category": "High School / Middle", "email": "BAUMANTIFFANY@aasd.k12.wi.us" },
+    { "id": 5, "name": "Kali Behnke", "role": "Fourth Grade", "category": "Elementary", "email": "BEHNKEKALI@aasd.k12.wi.us" },
+    { "id": 6, "name": "Josh Bohlen", "role": "School Resource Officer", "category": "Support Staff", "email": "josh.bohlen@grandchutewi.gov" },
+    { "id": 7, "name": "Jason Cummings", "role": "English Language Arts", "category": "High School / Middle", "email": "CUMMINGSJASON@aasd.k12.wi.us" },
+    { "id": 8, "name": "Caden DeBruin", "role": "Business & Marketing", "category": "High School / Middle", "email": "DEBRUINCADEN@aasd.k12.wi.us" },
+    { "id": 9, "name": "Jonathan Doden", "role": "Math Teacher", "category": "High School / Middle", "email": "DODENJONATHAN@aasd.k12.wi.us" },
+    { "id": 10, "name": "Debra Dorn", "role": "Administrative Assistant", "category": "Support Staff", "email": "DORNDEBRA@aasd.k12.wi.us" },
+    { "id": 11, "name": "Nicole Dutter", "role": "First Grade Teacher", "category": "Elementary", "email": "DUTTERNICOLE@aasd.k12.wi.us" },
+    { "id": 12, "name": "Kathryn Gardner", "role": "School Nurse", "category": "Support Staff", "email": "GARDNERKATHRYN@aasd.k12.wi.us" },
+    { "id": 13, "name": "Nickolas Giese", "role": "Math Teacher", "category": "High School / Middle", "email": "GIESENICKOLAS@aasd.k12.wi.us" },
+    { "id": 14, "name": "Winter Giese", "role": "Administrative Assistant", "category": "Support Staff", "email": "GIESEWINTER@aasd.k12.wi.us" },
+    { "id": 15, "name": "Nathan Hazen", "role": "Social Studies Teacher", "category": "High School / Middle", "email": "HAZENNATHAN@aasd.k12.wi.us" },
+    { "id": 16, "name": "Matthew Hohensee", "role": "Fifth Grade Teacher", "category": "Elementary", "email": "HOHENSEEMATTHE@aasd.k12.wi.us" },
+    { "id": 17, "name": "Jennifer Johnston", "role": "English Language Arts", "category": "High School / Middle", "email": "JOHNSTONJENNIF@aasd.k12.wi.us" },
+    { "id": 18, "name": "Elizabeth Koski", "role": "English Language Arts", "category": "High School / Middle", "email": "KOSKIELIZABETH@aasd.k12.wi.us" },
+    { "id": 19, "name": "Sammantha Kuhnke", "role": "4K & Kindergarten Teacher", "category": "Elementary", "email": "KUHNKESAMMANTH@aasd.k12.wi.us" },
+    { "id": 20, "name": "Megan Lisowe", "role": "Literacy Interventionist", "category": "Support Staff", "email": "LISOWEMEGAN@aasd.k12.wi.us" },
+    { "id": 21, "name": "Alma Lopez Lara", "role": "English Learner Teacher", "category": "Support Staff", "email": "LOPEZLARAALMA@aasd.k12.wi.us" },
+    { "id": 22, "name": "Robert Pennewell", "role": "Middle School Teacher", "category": "High School / Middle", "email": "PENNEWELLROBER@aasd.k12.wi.us" },
+    { "id": 23, "name": "Samantha Aldava", "role": "Fifth Grade Teacher", "category": "Elementary", "email": "ALDAVASAMANTHA@aasd.k12.wi.us" },
+    { "id": 24, "name": "Emma Adams", "role": "Special Education Teacher", "category": "Support Staff", "email": "ADAMSEMMA@aasd.k12.wi.us" },
+    { "id": 25, "name": "Leslie Albor", "role": "K-12 Counselor", "category": "Support Staff", "email": "ALBORLESLIE@aasd.k12.wi.us" }
+  ],
+  "pending": []
+}

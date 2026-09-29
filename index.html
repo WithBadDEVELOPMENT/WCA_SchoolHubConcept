@@ -5,29 +5,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WCA School Hub | Wisconsin Connections Academy</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      --primary: #0052cc;
-      --primary-hover: #003e99;
-      --primary-light: #e6f0ff;
-      --secondary: #00a887;
-      --owl-gold: #f59e0b;
+      --wca-red: #d9381e;
+      --wca-red-hover: #b82a13;
+      --wca-red-light: #fdf2f0;
+      --wca-gold: #f59e0b;
+      --wca-purple: #581c87;
+      --btn-pink: #e91e63;
+      --btn-teal: #00bcd4;
+      --btn-yellow: #ffb300;
       --dark: #0f172a;
-      --dark-muted: #475569;
+      --dark-muted: #64748b;
       --light-bg: #f8fafc;
       --card-bg: #ffffff;
       --border: #e2e8f0;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-      --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.08);
-      --shadow-lg: 0 12px 30px -4px rgba(0,0,0,0.12);
       --radius: 12px;
-      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after {
@@ -37,36 +36,35 @@
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       background-color: var(--light-bg);
       color: var(--dark);
-      line-height: 1.6;
-      overflow-x: hidden;
+      line-height: 1.5;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    .reveal {
+    .reveal-on-scroll {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      transform: translate3d(0, 20px, 0);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: opacity, transform;
     }
 
-    .reveal.active {
+    .reveal-on-scroll.is-visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate3d(0, 0, 0);
     }
 
     header {
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(10px);
+      background: #ffffff;
       position: sticky;
       top: 0;
       z-index: 1000;
-      border-bottom: 2px solid #e0e7ff;
-      box-shadow: 0 4px 15px rgba(0, 82, 204, 0.06);
+      border-bottom: 3px solid var(--wca-red);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
     .navbar {
@@ -87,22 +85,16 @@
     }
 
     .brand-owl {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      border-radius: 12px;
+      width: 46px;
+      height: 46px;
+      background: var(--wca-red);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--owl-gold);
-      font-size: 1.5rem;
-      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
-      position: relative;
-      border: 1.5px solid var(--owl-gold);
-    }
-
-    .brand-owl i {
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+      color: #ffffff;
+      font-size: 1.4rem;
+      box-shadow: 0 3px 8px rgba(217, 56, 30, 0.3);
     }
 
     .brand-text h1 {
@@ -111,12 +103,11 @@
       font-weight: 800;
       line-height: 1.1;
       color: var(--dark);
-      letter-spacing: -0.3px;
     }
 
     .brand-text span {
       font-size: 0.75rem;
-      color: var(--primary);
+      color: var(--wca-red);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -125,44 +116,57 @@
     .nav-menu {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.3rem;
       list-style: none;
     }
 
     .nav-link {
-      padding: 0.6rem 1rem;
+      padding: 0.55rem 0.9rem;
       color: var(--dark-muted);
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.925rem;
+      font-size: 0.9rem;
       border-radius: 8px;
-      transition: var(--transition);
+      transition: background-color 0.2s, color 0.2s;
       cursor: pointer;
     }
 
     .nav-link:hover, .nav-link.active {
-      color: var(--primary);
-      background-color: var(--primary-light);
+      color: var(--wca-red);
+      background-color: var(--wca-red-light);
+    }
+
+    .nav-link.admin-tab {
+      display: none;
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px dashed #f87171;
+    }
+
+    .nav-link.admin-tab.unlocked {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     .portal-btn {
-      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      background: var(--wca-red);
       color: white !important;
-      padding: 0.65rem 1.25rem;
-      border-radius: 10px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
       font-weight: 700;
+      font-size: 0.9rem;
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      transition: var(--transition);
+      gap: 0.5rem;
+      transition: transform 0.2s, background-color 0.2s;
       text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0, 82, 204, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 3px 10px rgba(217, 56, 30, 0.25);
     }
 
     .portal-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 82, 204, 0.4);
+      background: var(--wca-red-hover);
+      transform: translate3d(0, -1px, 0);
     }
 
     .page-view {
@@ -177,18 +181,13 @@
     .hero {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       color: white;
-      padding: 4rem 1.5rem;
+      padding: 3rem 1.5rem 3.5rem;
       position: relative;
-      overflow: hidden;
     }
 
     .hero-content {
       max-width: 1280px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
     }
 
     .hero-badge {
@@ -196,172 +195,148 @@
       align-items: center;
       gap: 0.5rem;
       background: rgba(245, 158, 11, 0.15);
-      border: 1px solid var(--owl-gold);
-      color: var(--owl-gold);
-      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--wca-gold);
+      color: var(--wca-gold);
+      padding: 0.35rem 0.85rem;
       border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      margin-bottom: 1.25rem;
-      backdrop-filter: blur(5px);
+      margin-bottom: 1rem;
     }
 
     .hero-title {
       font-family: 'Outfit', sans-serif;
       font-size: 2.75rem;
-      line-height: 1.2;
-      font-weight: 700;
-      margin-bottom: 1rem;
+      line-height: 1.15;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
     }
 
     .hero-title span {
-      color: #38bdf8;
+      color: #f87171;
     }
 
-    .hero-desc {
-      color: #94a3b8;
-      font-size: 1.1rem;
+    .hero-mission-caption {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      background: rgba(88, 28, 135, 0.4);
+      border-left: 4px solid var(--wca-gold);
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 12px 12px 0;
       margin-bottom: 2rem;
+      line-height: 1.6;
+      max-width: 900px;
     }
 
-    .quick-launch-grid {
+    .hero-action-buttons {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 2rem;
     }
 
-    .launch-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 1.25rem;
-      border-radius: var(--radius);
-      color: white;
-      text-decoration: none;
-      transition: var(--transition);
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .launch-card:hover {
-      background: rgba(255, 255, 255, 0.12);
-      transform: translateY(-3px);
-      border-color: rgba(255, 255, 255, 0.25);
-    }
-
-    .launch-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      background: rgba(56, 189, 248, 0.15);
-      color: #38bdf8;
+    .action-banner-btn {
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      padding: 1.25rem 1rem;
+      font-family: 'Outfit', sans-serif;
       font-size: 1.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      transition: transform 0.2s, filter 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .launch-title {
-      font-weight: 700;
-      font-size: 1rem;
+    .action-banner-btn:hover {
+      transform: translate3d(0, -3px, 0);
+      filter: brightness(1.08);
     }
 
-    .launch-subtitle {
-      font-size: 0.8rem;
-      color: #94a3b8;
-    }
+    .btn-absence { background-color: var(--btn-pink); }
+    .btn-materials { background-color: var(--btn-teal); }
+    .btn-envelopes { background-color: var(--btn-yellow); color: #0f172a; }
 
     .container {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 3.5rem 1.5rem;
+      padding: 2.5rem 1.5rem;
     }
 
-    .section-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--dark);
-    }
-
-    .section-subtitle {
-      color: var(--dark-muted);
-      margin-bottom: 2rem;
-      font-size: 1rem;
-    }
-
-    .resources-grid {
+    .school-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.75rem;
+      margin-top: 1rem;
     }
 
-    .resource-card {
+    .widget-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1.5rem;
-      transition: var(--transition);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
 
-    .resource-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-      border-color: var(--primary-light);
-    }
-
-    .card-header {
+    .widget-header {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
       margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--light-bg);
     }
 
-    .card-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
+    .widget-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--wca-red-light);
+      color: var(--wca-red);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
-    }
-
-    .icon-blue { background: #e0f2fe; color: #0284c7; }
-    .icon-green { background: #dcfce7; color: #16a34a; }
-    .icon-purple { background: #f3e8ff; color: #9333ea; }
-    .icon-orange { background: #ffedd5; color: #ea580c; }
-
-    .card-title {
       font-size: 1.1rem;
+    }
+
+    .widget-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
       font-weight: 700;
-      color: var(--dark);
     }
 
-    .card-desc {
-      font-size: 0.9rem;
+    .announcement-item {
+      padding: 0.85rem 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .announcement-item:last-child {
+      border-bottom: none;
+    }
+
+    .announcement-date {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--wca-red);
+      text-transform: uppercase;
+    }
+
+    .announcement-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin: 0.2rem 0;
+    }
+
+    .announcement-desc {
+      font-size: 0.85rem;
       color: var(--dark-muted);
-      margin-bottom: 1.5rem;
-      flex-grow: 1;
-    }
-
-    .card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: var(--transition);
-    }
-
-    .card-link:hover {
-      gap: 0.75rem;
     }
 
     .directory-header-bar {
@@ -370,52 +345,51 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .add-teacher-btn {
-      background: #10b981;
+      background: var(--wca-red);
       color: white;
       border: none;
       padding: 0.65rem 1.2rem;
       border-radius: 8px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      transition: var(--transition);
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+      transition: transform 0.2s, background-color 0.2s;
+      box-shadow: 0 2px 8px rgba(217, 56, 30, 0.25);
     }
 
     .add-teacher-btn:hover {
-      background: #059669;
-      transform: translateY(-1px);
+      background: var(--wca-red-hover);
+      transform: translate3d(0, -1px, 0);
     }
 
     .search-filter-bar {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      padding: 1.25rem;
+      padding: 1rem;
       border-radius: var(--radius);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.85rem;
       align-items: center;
-      box-shadow: var(--shadow-sm);
     }
 
     .search-box {
       flex: 1;
-      min-width: 250px;
+      min-width: 240px;
       position: relative;
     }
 
     .search-box i {
       position: absolute;
-      left: 1rem;
+      left: 0.85rem;
       top: 50%;
       transform: translateY(-50%);
       color: var(--dark-muted);
@@ -423,142 +397,119 @@
 
     .search-input {
       width: 100%;
-      padding: 0.75rem 1rem 0.75rem 2.75rem;
+      padding: 0.65rem 0.85rem 0.65rem 2.5rem;
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       outline: none;
-      transition: var(--transition);
     }
 
-    .search-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px var(--primary-light);
-    }
+    .search-input:focus { border-color: var(--wca-red); }
 
     .filter-btn-group {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.4rem;
       flex-wrap: wrap;
     }
 
     .filter-btn {
-      padding: 0.5rem 1rem;
+      padding: 0.45rem 0.85rem;
       border: 1px solid var(--border);
       background: white;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: var(--dark-muted);
       cursor: pointer;
-      transition: var(--transition);
+      transition: background-color 0.2s, color 0.2s;
     }
 
     .filter-btn:hover, .filter-btn.active {
-      background: var(--primary);
+      background: var(--wca-red);
       color: white;
-      border-color: var(--primary);
+      border-color: var(--wca-red);
     }
 
     .directory-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
     }
 
     .staff-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
+      padding: 1.25rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      transition: var(--transition);
-      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .staff-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
+      transform: translate3d(0, -3px, 0);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
 
     .staff-avatar {
-      width: 72px;
-      height: 72px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary-light), #e2e8f0);
-      color: var(--primary);
+      background: var(--wca-red-light);
+      color: var(--wca-red);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
     }
 
-    .staff-name {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 0.25rem;
-    }
-
-    .staff-role {
-      font-size: 0.85rem;
-      color: var(--secondary);
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-    }
-
+    .staff-name { font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 0.2rem; }
+    .staff-role { font-size: 0.8rem; color: var(--wca-red); font-weight: 600; margin-bottom: 0.75rem; }
     .staff-email {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--dark-muted);
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.4rem 0.8rem;
+      gap: 0.35rem;
+      padding: 0.35rem 0.7rem;
       background: var(--light-bg);
       border-radius: 6px;
-      transition: var(--transition);
       word-break: break-all;
     }
+    .staff-email:hover { color: var(--wca-red); background: var(--wca-red-light); }
 
-    .staff-email:hover {
-      color: var(--primary);
-      background: var(--primary-light);
+    .wall-iframe-container {
+      width: 100%;
+      height: 720px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
-    .custom-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #fef3c7;
-      color: #d97706;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 0.25rem 0.5rem;
-      border-radius: 20px;
-      border: 1px solid #fde68a;
+    .wall-iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
     .modal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 2000;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.2s ease;
     }
 
     .modal-overlay.active {
@@ -568,127 +519,33 @@
 
     .modal {
       background: white;
-      padding: 2rem;
+      padding: 1.75rem;
       border-radius: var(--radius);
       width: 100%;
-      max-width: 480px;
-      box-shadow: var(--shadow-lg);
-      transform: translateY(20px);
-      transition: transform 0.3s ease;
-    }
-
-    .modal-overlay.active .modal {
-      transform: translateY(0);
+      max-width: 450px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
-    .modal-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-    }
+    .modal-title { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700; }
+    .close-modal { background: none; border: none; font-size: 1.2rem; color: var(--dark-muted); cursor: pointer; }
 
-    .close-modal {
-      background: none;
-      border: none;
-      font-size: 1.25rem;
-      color: var(--dark-muted);
-      cursor: pointer;
-    }
-
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-      color: var(--dark);
-    }
-
-    .form-input, .form-select {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    .form-input:focus, .form-select:focus {
-      border-color: var(--primary);
-    }
-
-    .form-submit {
-      width: 100%;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.8rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: var(--transition);
-      margin-top: 0.5rem;
-    }
-
-    .form-submit:hover {
-      background: var(--primary-hover);
-    }
-
-    .news-section {
-      background: white;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .news-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      background: var(--light-bg);
-    }
-
-    .news-date {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.5rem;
-    }
-
-    .news-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .news-excerpt {
-      font-size: 0.9rem;
-      color: var(--dark-muted);
-    }
+    .form-group { margin-bottom: 1rem; }
+    .form-label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .form-input, .form-select { width: 100%; padding: 0.65rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; outline: none; }
+    .form-submit { width: 100%; background: var(--wca-red); color: white; border: none; padding: 0.75rem; border-radius: 6px; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; }
 
     footer {
       background: var(--dark);
       color: white;
       margin-top: auto;
-      padding: 3rem 1.5rem 1.5rem;
+      padding: 2.5rem 1.5rem 1.25rem;
     }
 
     .footer-content {
@@ -697,77 +554,22 @@
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
       gap: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    .footer-brand h2 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .footer-brand p {
-      color: #94a3b8;
-      font-size: 0.9rem;
-      max-width: 400px;
-    }
-
-    .footer-column h3 {
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 1rem;
-      color: #38bdf8;
-    }
-
-    .footer-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .footer-links a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: var(--transition);
-    }
-
-    .footer-links a:hover {
-      color: white;
-    }
-
-    .footer-bottom {
-      max-width: 1280px;
-      margin: 1.5rem auto 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
-      color: #64748b;
-    }
+    .footer-brand h2 { font-family: 'Outfit', sans-serif; font-size: 1.15rem; margin-bottom: 0.5rem; }
+    .footer-brand p { color: #94a3b8; font-size: 0.85rem; max-width: 380px; }
+    .footer-column h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.85rem; color: #f87171; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    .footer-links a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; cursor: pointer; }
+    .footer-bottom { max-width: 1280px; margin: 1.25rem auto 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #64748b; }
 
     @media (max-width: 768px) {
-      .hero-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      .quick-launch-grid {
-        grid-template-columns: 1fr;
-      }
-      .footer-content {
-        grid-template-columns: 1fr;
-      }
-      .footer-bottom {
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
-      }
-      .nav-menu {
-        display: none;
-      }
+      .hero-action-buttons { grid-template-columns: 1fr; }
+      .school-grid { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: 1fr; }
+      .nav-menu { display: none; }
     }
   </style>
 </head>
@@ -776,20 +578,18 @@
   <header>
     <nav class="navbar">
       <a href="#" class="brand" onclick="switchPage('home'); return false;">
-        <div class="brand-owl">
-          <i class="fa-solid fa-owl"></i>
-        </div>
+        <div class="brand-owl"><i class="fa-solid fa-owl"></i></div>
         <div class="brand-text">
           <h1>WCA School Hub</h1>
           <span>Wisconsin Connections Academy</span>
         </div>
       </a>
-      
+
       <ul class="nav-menu">
         <li><a class="nav-link active" id="nav-home" onclick="switchPage('home')">Home</a></li>
         <li><a class="nav-link" id="nav-staff" onclick="switchPage('staff')">Staff Directory</a></li>
-        <li><a class="nav-link" href="https://wca.aasd.k12.wi.us/families" target="_blank">Families</a></li>
-        <li><a class="nav-link" href="https://wca.aasd.k12.wi.us/our-school" target="_blank">About WCA</a></li>
+        <li><a class="nav-link" id="nav-wall" onclick="switchPage('wall')">Kindness Wall</a></li>
+        <li><a class="nav-link admin-tab" id="nav-admin" onclick="switchPage('admin')"><i class="fa-solid fa-shield-halved"></i> Admin Queue (<span id="admin-count">0</span>)</a></li>
       </ul>
 
       <a href="https://www.connexus.com/" target="_blank" class="portal-btn">
@@ -800,106 +600,58 @@
 
   <div id="page-home" class="page-view active">
     <section class="hero">
-      <div class="hero-content">
-        <div class="reveal">
-          <div class="hero-badge">
-            <i class="fa-solid fa-owl"></i> WCA Night Owls • Official Student Portal
-          </div>
-          <h2 class="hero-title">Welcome to the <span>WCA Hub</span></h2>
-          <p class="hero-desc">Your central point for accessing online classroom portals, school schedules, staff contacts, and essential educational resources.</p>
+      <div class="hero-content reveal-on-scroll">
+        <div class="hero-badge"><i class="fa-solid fa-graduation-cap"></i> Official Student & Family Portal</div>
+        <h2 class="hero-title">Wisconsin Connections Academy <span>Hub</span></h2>
+        
+        <div class="hero-mission-caption">
+          MISSION: Inspire Every Student, Every Day by partnering with families to best meet the needs of individual students in a flexible learning environment for a lifetime of learning.
         </div>
 
-        <div class="quick-launch-grid reveal">
-          <a href="https://www.connexus.com/" target="_blank" class="launch-card">
-            <div class="launch-icon"><i class="fa-solid fa-laptop-code"></i></div>
-            <div class="launch-title">Pearson Classroom</div>
-            <div class="launch-subtitle">Access daily coursework & lessons</div>
+        <div class="hero-action-buttons">
+          <a href="https://wca.aasd.k12.wi.us/families" target="_blank" class="action-banner-btn btn-absence">
+            <i class="fa-solid fa-calendar-minus" style="margin-right:0.6rem;"></i> REPORT AN ABSENCE
           </a>
-          <a href="#" onclick="switchPage('staff'); return false;" class="launch-card">
-            <div class="launch-icon"><i class="fa-solid fa-address-book"></i></div>
-            <div class="launch-title">Staff Directory</div>
-            <div class="launch-subtitle">Contact teachers & leadership</div>
+          <a href="https://wca.aasd.k12.wi.us/families" target="_blank" class="action-banner-btn btn-materials">
+            <i class="fa-solid fa-box-open" style="margin-right:0.6rem;"></i> RETURNING MATERIALS
           </a>
-          <a href="https://wca.aasd.k12.wi.us/families" target="_blank" class="launch-card">
-            <div class="launch-icon"><i class="fa-solid fa-users-line"></i></div>
-            <div class="launch-title">Learning Coach</div>
-            <div class="launch-subtitle">Tools for home support</div>
-          </a>
-          <a href="https://wca.aasd.k12.wi.us/contact-us" target="_blank" class="launch-card">
-            <div class="launch-icon"><i class="fa-solid fa-headset"></i></div>
-            <div class="launch-title">Tech & Help Desk</div>
-            <div class="launch-subtitle">Get support & answers</div>
+          <a href="https://wca.aasd.k12.wi.us/families" target="_blank" class="action-banner-btn btn-envelopes">
+            <i class="fa-solid fa-envelope-open-text" style="margin-right:0.6rem;"></i> PREPAID ENVELOPES
           </a>
         </div>
       </div>
     </section>
 
     <section class="container">
-      <h2 class="section-title reveal">Essential Resources</h2>
-      <p class="section-subtitle reveal">Quick links to core services and tools for Wisconsin Connections Academy students.</p>
-
-      <div class="resources-grid">
-        <div class="resource-card reveal">
-          <div class="card-header">
-            <div class="card-icon icon-blue"><i class="fa-solid fa-book-open"></i></div>
-            <h3 class="card-title">Pearson Connexus</h3>
+      <div class="school-grid">
+        <div>
+          <div class="widget-card reveal-on-scroll">
+            <div class="widget-header">
+              <div class="widget-icon"><i class="fa-solid fa-bell"></i></div>
+              <h3 class="widget-title">Live School Announcements</h3>
+            </div>
+            <div class="announcement-item">
+              <div class="announcement-date">Today • Night Owls Bulletin</div>
+              <div class="announcement-title">Welcome to the WCA Academic Year!</div>
+              <div class="announcement-desc">Be sure to check Pearson Connexus daily for live ClassLive sessions, teacher contact hours, and upcoming project deadlines.</div>
+            </div>
+            <div class="announcement-item">
+              <div class="announcement-date">Student Life</div>
+              <div class="announcement-title">Share Your Positive Thoughts on the Kindness Wall!</div>
+              <div class="announcement-desc">Post encouraging messages and artwork directly to the official WCA YouUplift wall.</div>
+            </div>
           </div>
-          <p class="card-desc">Log into the primary learning management system for assignments, assessments, and grade tracking.</p>
-          <a href="https://www.connexus.com/" target="_blank" class="card-link">Launch Portal <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
-        <div class="resource-card reveal">
-          <div class="card-header">
-            <div class="card-icon icon-green"><i class="fa-solid fa-user-tie"></i></div>
-            <h3 class="card-title">Staff Directory</h3>
+        <div>
+          <div class="widget-card reveal-on-scroll">
+            <div class="widget-header">
+              <div class="widget-icon"><i class="fa-solid fa-clock"></i></div>
+              <h3 class="widget-title">Virtual Bell & Time</h3>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--dark-muted); margin-bottom: 0.5rem;">Current Central Time (CT):</p>
+            <h4 id="live-clock" style="font-size: 1.6rem; font-family: 'Outfit'; color: var(--wca-red);">--:--:-- --</h4>
           </div>
-          <p class="card-desc">Browse the full list of WCA teachers, grade-level advisors, counselors, and school administration.</p>
-          <a href="#" onclick="switchPage('staff'); return false;" class="card-link">View Directory <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-
-        <div class="resource-card reveal">
-          <div class="card-header">
-            <div class="card-icon icon-purple"><i class="fa-solid fa-calendar-days"></i></div>
-            <h3 class="card-title">Academic Calendar</h3>
-          </div>
-          <p class="card-desc">Stay informed about key school dates, term deadlines, breaks, and district holidays.</p>
-          <a href="https://wca.aasd.k12.wi.us/" target="_blank" class="card-link">View Calendar <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-
-        <div class="resource-card reveal">
-          <div class="card-header">
-            <div class="card-icon icon-orange"><i class="fa-solid fa-compass"></i></div>
-            <h3 class="card-title">Enrollment & Info</h3>
-          </div>
-          <p class="card-desc">Learn about enrollment steps, tuition-free charter policies, and curriculum highlights.</p>
-          <a href="https://wca.aasd.k12.wi.us/district" target="_blank" class="card-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </section>
-
-    <section class="news-section">
-      <div class="container">
-        <h2 class="section-title reveal">School News & Announcements</h2>
-        <p class="section-subtitle reveal">Latest updates from Wisconsin Connections Academy and Appleton Area School District.</p>
-
-        <div class="news-grid">
-          <article class="news-card reveal">
-            <div class="news-date">District Notice</div>
-            <h3 class="news-title">Pearson Online Classroom Navigation</h3>
-            <p class="news-excerpt">Be sure to regularly review your course planner and log student attendance daily inside Pearson Connexus.</p>
-          </article>
-
-          <article class="news-card reveal">
-            <div class="news-date">Learning Coaches</div>
-            <h3 class="news-title">Learning Coach Resources Updated</h3>
-            <p class="news-excerpt">Explore updated guides and tips for supporting your student's online learning environment at home.</p>
-          </article>
-
-          <article class="news-card reveal">
-            <div class="news-date">WCA Community</div>
-            <h3 class="news-title">Virtual Clubs & Activities</h3>
-            <p class="news-excerpt">Connect with fellow WCA students through virtual club meetups and school-wide extracurricular events.</p>
-          </article>
         </div>
       </div>
     </section>
@@ -909,11 +661,11 @@
     <div class="container">
       <div class="directory-header-bar">
         <div>
-          <h2 class="section-title">Staff Directory</h2>
-          <p class="section-subtitle" style="margin-bottom:0;">Connect with certified teachers, support staff, and school leadership at Wisconsin Connections Academy.</p>
+          <h2 class="section-title" style="font-family:'Outfit',sans-serif; font-size:1.75rem;">Staff Directory</h2>
+          <p style="color: var(--dark-muted);">Find certified teachers and leadership at WCA.</p>
         </div>
         <button class="add-teacher-btn" onclick="openAddModal()">
-          <i class="fa-solid fa-user-plus"></i> Add Missing Teacher
+          <i class="fa-solid fa-user-plus"></i> Submit Missing Teacher
         </button>
       </div>
 
@@ -925,21 +677,47 @@
         <div class="filter-btn-group">
           <button class="filter-btn active" onclick="setCategory('all', this)">All Staff</button>
           <button class="filter-btn" onclick="setCategory('Leadership', this)">Leadership</button>
-          <button class="filter-btn" onclick="setCategory('Elementary', this)">Elementary (4K-5)</button>
-          <button class="filter-btn" onclick="setCategory('High School / Middle', this)">Middle/High School</button>
+          <button class="filter-btn" onclick="setCategory('Elementary', this)">Elementary</button>
+          <button class="filter-btn" onclick="setCategory('High School / Middle', this)">Middle/High</button>
           <button class="filter-btn" onclick="setCategory('Support Staff', this)">Support Staff</button>
         </div>
       </div>
 
-      <div class="directory-grid" id="staff-grid">
+      <div class="directory-grid" id="staff-grid"></div>
+    </div>
+  </div>
+
+  <div id="page-wall" class="page-view">
+    <div class="container">
+      <div class="directory-header-bar">
+        <div>
+          <h2 class="section-title" style="font-family:'Outfit',sans-serif; font-size:1.75rem;">WCA Student Kindness Wall</h2>
+          <p style="color: var(--dark-muted);">Share positive quotes, encouragement, and artwork with fellow Night Owls!</p>
+        </div>
+        <a href="https://youuplift.com/wisconsin-connections-academy-kindness-wall/" target="_blank" class="add-teacher-btn" style="text-decoration:none;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Wall in New Tab
+        </a>
       </div>
+
+      <div class="wall-iframe-container reveal-on-scroll">
+        <iframe src="https://youuplift.com/wisconsin-connections-academy-kindness-wall/" title="Wisconsin Connections Academy Kindness Wall"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-admin" class="page-view">
+    <div class="container">
+      <h2 class="section-title" style="font-family:'Outfit',sans-serif; font-size:1.75rem;"><i class="fa-solid fa-shield-halved"></i> Admin Teacher Approval Queue</h2>
+      <p style="color: var(--dark-muted); margin-bottom: 1.5rem;">Review student/staff teacher submissions before appending them directly to teachers.txt.</p>
+
+      <div id="admin-pending-grid" class="directory-grid"></div>
     </div>
   </div>
 
   <div class="modal-overlay" id="add-modal">
     <div class="modal">
       <div class="modal-header">
-        <h3 class="modal-title"><i class="fa-solid fa-user-plus"></i> Add Missing Teacher</h3>
+        <h3 class="modal-title"><i class="fa-solid fa-user-plus"></i> Submit Teacher to Admin Queue</h3>
         <button class="close-modal" onclick="closeAddModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <form id="add-teacher-form" onsubmit="handleAddTeacher(event)">
@@ -949,7 +727,7 @@
         </div>
         <div class="form-group">
           <label class="form-label" for="teacher-role">Title / Subject</label>
-          <input type="text" id="teacher-role" class="form-input" placeholder="e.g. Science Teacher, Special Education" required>
+          <input type="text" id="teacher-role" class="form-input" placeholder="e.g. Science Teacher" required>
         </div>
         <div class="form-group">
           <label class="form-label" for="teacher-category">Category</label>
@@ -964,7 +742,23 @@
           <label class="form-label" for="teacher-email">Email Address</label>
           <input type="email" id="teacher-email" class="form-input" placeholder="e.g. SMITHJANE@aasd.k12.wi.us" required>
         </div>
-        <button type="submit" class="form-submit">Add to Directory</button>
+        <button type="submit" class="form-submit">Send to Admin for Approval</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="admin-login-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fa-solid fa-lock"></i> Admin Portal Login</h3>
+        <button class="close-modal" onclick="closeAdminModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form onsubmit="handleAdminLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="admin-passcode">Enter Admin Passcode</label>
+          <input type="password" id="admin-passcode" class="form-input" placeholder="Passcode (Default: admin123)" required>
+        </div>
+        <button type="submit" class="form-submit">Unlock Admin Approval Queue</button>
       </form>
     </div>
   </div>
@@ -973,28 +767,24 @@
     <div class="footer-content">
       <div class="footer-brand">
         <h2>Wisconsin Connections Academy</h2>
-        <p>A tuition-free virtual public charter school serving students statewide in partnership with the Appleton Area School District.</p>
+        <p>Tuition-free virtual charter school serving statewide in partnership with Appleton Area School District.</p>
       </div>
-
       <div class="footer-column">
-        <h3>Quick Links</h3>
+        <h3>Links</h3>
         <ul class="footer-links">
           <li><a href="https://www.connexus.com/" target="_blank">Pearson Connexus</a></li>
-          <li><a href="#" onclick="switchPage('staff'); return false;">Staff Directory</a></li>
-          <li><a href="https://wca.aasd.k12.wi.us/families" target="_blank">Learning Coach Portal</a></li>
-          <li><a href="https://wca.aasd.k12.wi.us/our-school" target="_blank">About Our School</a></li>
+          <li><a onclick="switchPage('staff')">Staff Directory</a></li>
+          <li><a onclick="switchPage('wall')">Kindness Wall</a></li>
+          <li><a onclick="openAdminModal()" style="color: #ef4444;"><i class="fa-solid fa-lock"></i> Admin Login</a></li>
         </ul>
       </div>
-
       <div class="footer-column">
-        <h3>Contact Info</h3>
+        <h3>Contact</h3>
         <ul class="footer-links">
           <li><a href="tel:18335910251"><i class="fa-solid fa-phone"></i> 1-833-591-0251</a></li>
-          <li><a href="#"><i class="fa-solid fa-location-dot"></i> 350 W Capitol Drive<br>Appleton, WI 54911</a></li>
         </ul>
       </div>
     </div>
-
     <div class="footer-bottom">
       <p>&copy; Wisconsin Connections Academy. Built by Aaron Trusty (With Bad DEVELOPMENT).</p>
       <p>Appleton Area School District</p>
@@ -1002,59 +792,90 @@
   </footer>
 
   <script>
-    const defaultStaffMembers = [
-      { name: "Michelle Mueller", role: "Principal / School Leader", category: "Leadership", email: "MUELLERMICHELL@aasd.k12.wi.us" },
-      { name: "Lori Donaldson", role: "Dean of Students", category: "Leadership", email: "DONALDSONLORI@aasd.k12.wi.us" },
-      { name: "Sarah Bauer", role: "English Language Arts", category: "High School / Middle", email: "BAUERSARAH@aasd.k12.wi.us" },
-      { name: "Tiffany Bauman", role: "Chemistry, Physical Science", category: "High School / Middle", email: "BAUMANTIFFANY@aasd.k12.wi.us" },
-      { name: "Kali Behnke", role: "Fourth Grade Teacher", category: "Elementary", email: "BEHNKEKALI@aasd.k12.wi.us" },
-      { name: "Josh Bohlen", role: "School Resource Officer", category: "Support Staff", email: "josh.bohlen@grandchutewi.gov" },
-      { name: "Jason Cummings", role: "English Language Arts", category: "High School / Middle", email: "CUMMINGSJASON@aasd.k12.wi.us" },
-      { name: "Caden DeBruin", role: "Business & Marketing", category: "High School / Middle", email: "DEBRUINCADEN@aasd.k12.wi.us" },
-      { name: "Jonathan Doden", role: "Math Teacher", category: "High School / Middle", email: "DODENJONATHAN@aasd.k12.wi.us" },
-      { name: "Debra Dorn", role: "Administrative Assistant, Paraprofessional", category: "Support Staff", email: "DORNDEBRA@aasd.k12.wi.us" },
-      { name: "Nicole Dutter", role: "First Grade Teacher", category: "Elementary", email: "DUTTERNICOLE@aasd.k12.wi.us" },
-      { name: "Kathryn Gardner", role: "School Nurse", category: "Support Staff", email: "GARDNERKATHRYN@aasd.k12.wi.us" },
-      { name: "Nickolas Giese", role: "Math Teacher", category: "High School / Middle", email: "GIESENICKOLAS@aasd.k12.wi.us" },
-      { name: "Winter Giese", role: "Administrative Assistant", category: "Support Staff", email: "GIESEWINTER@aasd.k12.wi.us" },
-      { name: "Nathan Hazen", role: "Social Studies Teacher", category: "High School / Middle", email: "HAZENNATHAN@aasd.k12.wi.us" },
-      { name: "Matthew Hohensee", role: "Fifth Grade Teacher", category: "Elementary", email: "HOHENSEEMATTHE@aasd.k12.wi.us" },
-      { name: "Jennifer Johnston", role: "English Language Arts, Social Studies", category: "High School / Middle", email: "JOHNSTONJENNIF@aasd.k12.wi.us" },
-      { name: "Elizabeth Koski", role: "English Language Arts", category: "High School / Middle", email: "KOSKIELIZABETH@aasd.k12.wi.us" },
-      { name: "Sammantha Kuhnke", role: "4K & Kindergarten Teacher", category: "Elementary", email: "KUHNKESAMMANTH@aasd.k12.wi.us" },
-      { name: "Megan Lisowe", role: "Literacy Interventionist", category: "Support Staff", email: "LISOWEMEGAN@aasd.k12.wi.us" },
-      { name: "Alma Lopez Lara", role: "English Learner (EL) Teacher", category: "Support Staff", email: "LOPEZLARAALMA@aasd.k12.wi.us" },
-      { name: "Robert Pennewell", role: "Middle School Teacher", category: "High School / Middle", email: "PENNEWELLROBER@aasd.k12.wi.us" }
+    const INITIAL_TEACHERS = [
+      { name: 'Michelle Mueller', role: 'Principal / School Leader', category: 'Leadership', email: 'MUELLERMICHELL@aasd.k12.wi.us' },
+      { name: 'Lori Donaldson', role: 'Dean of Students', category: 'Leadership', email: 'DONALDSONLORI@aasd.k12.wi.us' },
+      { name: 'Sarah Bauer', role: 'English Language Arts', category: 'High School / Middle', email: 'BAUERSARAH@aasd.k12.wi.us' },
+      { name: 'Tiffany Bauman', role: 'Chemistry, Physical Science', category: 'High School / Middle', email: 'BAUMANTIFFANY@aasd.k12.wi.us' },
+      { name: 'Kali Behnke', role: 'Fourth Grade Teacher', category: 'Elementary', email: 'BEHNKEKALI@aasd.k12.wi.us' },
+      { name: 'Josh Bohlen', role: 'School Resource Officer', category: 'Support Staff', email: 'josh.bohlen@grandchutewi.gov' },
+      { name: 'Jason Cummings', role: 'English Language Arts', category: 'High School / Middle', email: 'CUMMINGSJASON@aasd.k12.wi.us' },
+      { name: 'Caden DeBruin', role: 'Business & Marketing', category: 'High School / Middle', email: 'DEBRUINCADEN@aasd.k12.wi.us' },
+      { name: 'Jonathan Doden', role: 'Math Teacher', category: 'High School / Middle', email: 'DODENJONATHAN@aasd.k12.wi.us' }
     ];
 
-    let customStaff = JSON.parse(localStorage.getItem('wca_custom_staff') || '[]');
-    let staffMembers = [...defaultStaffMembers, ...customStaff];
+    let staffMembers = JSON.parse(localStorage.getItem('wca_approved_teachers')) || INITIAL_TEACHERS;
+    let pendingQueue = JSON.parse(localStorage.getItem('wca_pending_teachers')) || [];
+    let isAdminUnlocked = false;
     let currentCategory = 'all';
 
-    function getInitials(name) {
-      return name.split(' ').map(n => n[0]).join('');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    function initScrollAnimations() {
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
     }
+
+    function updateClock() {
+      const now = new Date();
+      const clockEl = document.getElementById('live-clock');
+      if (clockEl) {
+        clockEl.textContent = now.toLocaleTimeString('en-US', { timeZone: 'America/Chicago' });
+      }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
     function renderStaff(list) {
       const grid = document.getElementById('staff-grid');
       grid.innerHTML = '';
-
       if (list.length === 0) {
-        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--dark-muted);">No staff members found matching your search.</div>`;
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--dark-muted);">No staff members found matching search.</div>`;
+        return;
+      }
+      list.forEach(member => {
+        const initials = member.name.split(' ').map(n => n[0]).join('');
+        const card = document.createElement('div');
+        card.className = 'staff-card reveal-on-scroll';
+        card.innerHTML = `
+          <div class="staff-avatar">${initials}</div>
+          <h3 class="staff-name">${member.name}</h3>
+          <div class="staff-role">${member.role}</div>
+          <a href="mailto:${member.email}" class="staff-email"><i class="fa-regular fa-envelope"></i> ${member.email}</a>
+        `;
+        grid.appendChild(card);
+        observer.observe(card);
+      });
+    }
+
+    function renderAdminQueue() {
+      const grid = document.getElementById('admin-pending-grid');
+      grid.innerHTML = '';
+      document.getElementById('admin-count').textContent = pendingQueue.length;
+
+      if (pendingQueue.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--dark-muted);">No pending teacher approval requests right now!</div>`;
         return;
       }
 
-      list.forEach(member => {
+      pendingQueue.forEach((member, index) => {
         const card = document.createElement('div');
         card.className = 'staff-card';
+        card.style.borderColor = '#f59e0b';
         card.innerHTML = `
-          ${member.isCustom ? '<span class="custom-badge">Added</span>' : ''}
-          <div class="staff-avatar">${getInitials(member.name)}</div>
+          <div class="staff-avatar" style="background:#fef3c7; color:#d97706;"><i class="fa-solid fa-user-clock"></i></div>
           <h3 class="staff-name">${member.name}</h3>
           <div class="staff-role">${member.role}</div>
-          <a href="mailto:${member.email}" class="staff-email">
-            <i class="fa-regular fa-envelope"></i> ${member.email}
-          </a>
+          <div class="staff-email" style="margin-bottom: 1rem;">${member.email}</div>
+          <div style="display:flex; gap:0.5rem; width:100%;">
+            <button onclick="approveTeacher(${index})" style="flex:1; background:#10b981; color:white; border:none; padding:0.5rem; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-check"></i> Approve & Append</button>
+            <button onclick="rejectTeacher(${index})" style="background:#ef4444; color:white; border:none; padding:0.5rem 0.8rem; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+          </div>
         `;
         grid.appendChild(card);
       });
@@ -1080,60 +901,72 @@
     }
 
     function switchPage(pageId) {
-      document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
-      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
 
       document.getElementById('page-' + pageId).classList.add('active');
       const activeNav = document.getElementById('nav-' + pageId);
       if (activeNav) activeNav.classList.add('active');
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      initScrollAnimations();
     }
 
-    function openAddModal() {
-      document.getElementById('add-modal').classList.add('active');
-    }
-
-    function closeAddModal() {
-      document.getElementById('add-modal').classList.remove('active');
-    }
+    function openAddModal() { document.getElementById('add-modal').classList.add('active'); }
+    function closeAddModal() { document.getElementById('add-modal').classList.remove('active'); }
+    function openAdminModal() { document.getElementById('admin-login-modal').classList.add('active'); }
+    function closeAdminModal() { document.getElementById('admin-login-modal').classList.remove('active'); }
 
     function handleAddTeacher(e) {
       e.preventDefault();
-      const name = document.getElementById('teacher-name').value;
-      const role = document.getElementById('teacher-role').value;
-      const category = document.getElementById('teacher-category').value;
-      const email = document.getElementById('teacher-email').value;
+      const newTeacher = {
+        name: document.getElementById('teacher-name').value,
+        role: document.getElementById('teacher-role').value,
+        category: document.getElementById('teacher-category').value,
+        email: document.getElementById('teacher-email').value
+      };
 
-      const newTeacher = { name, role, category, email, isCustom: true };
-      customStaff.push(newTeacher);
-      localStorage.setItem('wca_custom_staff', JSON.stringify(customStaff));
-
-      staffMembers.push(newTeacher);
-      filterStaff();
+      pendingQueue.push(newTeacher);
+      localStorage.setItem('wca_pending_teachers', JSON.stringify(pendingQueue));
       closeAddModal();
       document.getElementById('add-teacher-form').reset();
+      renderAdminQueue();
+      alert("Teacher submitted! An administrator will review and approve it shortly.");
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const pass = document.getElementById('admin-passcode').value;
+      if (pass === 'admin123') {
+        isAdminUnlocked = true;
+        document.getElementById('nav-admin').classList.add('unlocked');
+        closeAdminModal();
+        switchPage('admin');
+        renderAdminQueue();
+      } else {
+        alert("Incorrect passcode! Use 'admin123'");
+      }
+    }
+
+    function approveTeacher(index) {
+      const approved = pendingQueue.splice(index, 1)[0];
+      staffMembers.push(approved);
+      localStorage.setItem('wca_approved_teachers', JSON.stringify(staffMembers));
+      localStorage.setItem('wca_pending_teachers', JSON.stringify(pendingQueue));
+      renderAdminQueue();
+      filterStaff();
+    }
+
+    function rejectTeacher(index) {
+      pendingQueue.splice(index, 1);
+      localStorage.setItem('wca_pending_teachers', JSON.stringify(pendingQueue));
+      renderAdminQueue();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      renderStaff(staffMembers);
-
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, observerOptions);
-
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      filterStaff();
+      renderAdminQueue();
+      initScrollAnimations();
     });
   </script>
 </body>

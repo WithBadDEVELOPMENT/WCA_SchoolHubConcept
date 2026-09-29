@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE || "admin123";
+const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE;
 
 const activeAdminTokens = new Set();
 
